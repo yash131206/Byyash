@@ -93,7 +93,7 @@
     .btn-yellow:hover { background: var(--yellow-hover); transform: translateY(-2px); }
 
     /* ================= HERO ================= */
-    .hero { padding: 165px 0 90px; text-align: center; }
+    .hero { padding: 105px 0 90px; text-align: center; }
     .eyebrow { display: inline-flex; align-items: center; gap: 8px; background: rgba(0,0,0,.04); border: 1px solid rgba(0,0,0,.07); padding: 7px 15px; border-radius: 999px; font-size: 12px; font-weight: 800; color: var(--gray); margin-bottom: 22px; }
     .dot { width: 7px; height: 7px; background: var(--yellow); border-radius: 50%; }
     h1 { font-size: clamp(45px, 7vw, 82px); line-height: 1.02; font-weight: 900; letter-spacing: -.055em; max-width: 850px; margin: auto; }
@@ -113,22 +113,42 @@
     .metric-item strong { display: block; font-size: 24px; font-weight: 800; }
     .metric-item span { color: var(--gray); font-size: 12px; }
 
-    section { padding: 100px 0; }
+    section { padding: 70px 0; }
     .section-heading { max-width: 680px; margin: 0 auto 60px; text-align: center; }
     .section-heading h2 { font-size: clamp(34px, 5vw, 50px); line-height: 1.05; letter-spacing: -.045em; font-weight: 900; }
     .section-heading p { margin-top: 15px; color: var(--gray); font-size: 17px; }
     .highlight { background: var(--black); color: var(--yellow); padding: 0 10px; border-radius: 8px; display: inline-block; }
 
     /* ================= MARQUEE WORK STRIPS ================= */
-    .marquee-wrapper { overflow: hidden; background: var(--light); padding: 80px 0; }
+    .marquee-wrapper { overflow: hidden; background: var(--light); padding: 60px 0; }
     .marquee { overflow: hidden; width: 100%; margin-bottom: 20px; }
     .marquee:last-child { margin-bottom: 0; }
-    .marquee-track { display: flex; width: max-content; gap: 18px; animation: workLeft 35s linear infinite; }
-    .marquee-track.reverse { animation: workRight 38s linear infinite; }
+    .marquee-track { display: flex; width: max-content; gap: 18px; animation: workLeft 40s linear infinite; }
+    .marquee-track.reverse { animation: workRight 43s linear infinite; }
     .marquee:hover .marquee-track { animation-play-state: paused; }
     
     .work-card { width: 300px; aspect-ratio: 16/9; flex-shrink: 0; border-radius: 16px; border: 1px solid var(--border); overflow: hidden; position: relative; background: #000; box-shadow: var(--shadow); }
     .work-card img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    /* Designer Badge over Thumbnails (Top-Right Corner) */
+    .designer-badge {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: rgba(17, 17, 17, 0.85);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      color: var(--yellow);
+      font-size: 10px;
+      font-weight: 800;
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      z-index: 5;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    }
 
     @keyframes workLeft { from { transform: translateX(0); } to { transform: translateX(-50%); } }
     @keyframes workRight { from { transform: translateX(-50%); } to { transform: translateX(0); } }
@@ -144,10 +164,11 @@
     /* ================= DESIGNER SECTION ================= */
     .designer-section { background: var(--light); overflow: hidden; }
     .designer-track { display: flex; width: max-content; gap: 20px; animation: designerMove 34s linear infinite; }
-    .designer-section:hover .designer-track { animation-play-state: paused; }
-    .designer-card { width: 295px; min-height: 310px; flex-shrink: 0; background: var(--black-2); color: white; border: 1px solid #292929; border-radius: var(--radius); padding: 34px 28px; text-align: center; transition: var(--transition); }
-    .designer-card:hover { transform: translateY(-6px); border-color: #444; }
-    .designer-avatar { width: 80px; height: 80px; margin: 0 auto 20px; display: grid; place-items: center; border-radius: 50%; border: 3px solid var(--yellow); background: #0c0c0c; color: var(--yellow); font-size: 25px; font-weight: 900; }
+    .designer-section:hover .designer-track { animation-play-state: running; }
+    .designer-card { width: 265px; min-height: 290px; flex-shrink: 0; background: var(--black-2); color: white; border: 1px solid #292929; border-radius: var(--radius); padding: 34px 28px; text-align: center; transition: var(--transition); }
+    .designer-card:hover { transform: translateY(0px); border-color: #444; }
+    .designer-avatar { width: 80px; height: 80px; margin: 0 auto 20px; display: grid; place-items: center; border-radius: 50%; border: 3px solid var(--yellow); background: #0c0c0c; overflow: hidden; }
+    .designer-avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
     .designer-card h3 { font-size: 20px; margin-bottom: 8px; }
     .designer-role { display: inline-block; background: var(--yellow); color: var(--black); padding: 5px 12px; border-radius: 999px; font-size: 10px; font-weight: 900; margin-bottom: 16px; }
     .designer-card p { color: #999; font-size: 13px; line-height: 1.6; }
@@ -173,21 +194,24 @@
     .featured .service-btn:hover { background: var(--yellow-hover); }
 
     /* ================= FAQ SECTION ================= */
-    .faq-section { background: #fff; }
-    .faq-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; max-width: 1000px; margin: auto; }
-    .faq-card { background: var(--light); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 28px; }
-    .faq-card h3 { font-size: 17px; font-weight: 800; margin-bottom: 8px; }
-    .faq-card p { color: var(--gray); font-size: 14px; line-height: 1.5; }
+    .faq-section { background: #fff; padding: 70px 0; }
+    .faq-container { max-width: 800px; margin: 0 auto; display: flex; flex-direction: column; gap: 12px; }
+    .faq-item { background: var(--light); border: 1px solid var(--border); border-radius: var(--radius-sm); overflow: hidden; }
+    .faq-question { width: 100%; background: none; border: none; padding: 20px 24px; display: flex; align-items: center; justify-content: space-between; font-size: 16px; font-weight: 800; text-align: left; cursor: pointer; color: var(--black); }
+    .faq-icon { font-size: 20px; font-weight: 600; transition: transform 0.3s ease; }
+    .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.35s cubic-bezier(0.16, 1, 0.3, 1), padding 0.3s ease; padding: 0 24px; color: var(--gray); font-size: 14px; line-height: 1.6; }
+    .faq-item.active .faq-answer { max-height: 200px; padding: 0 24px 20px 24px; }
+    .faq-item.active .faq-icon { transform: rotate(45deg); color: var(--yellow); }
 
     /* ================= WHY US ================= */
     .why-section { background: var(--light); }
-    .why-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 20px; }
-    .why-card { background: #fff; border: 1px solid var(--border); border-radius: var(--radius); padding: 40px; box-shadow: var(--shadow); }
+    .why-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 10px; }
+    .why-card { background: #fff; border: 1px solid var(--border); border-radius: var(--radius); padding: 30px; box-shadow: var(--shadow); }
     .why-card h3 { font-size: 22px; margin-bottom: 10px; }
     .why-card p { color: var(--gray); font-size: 15px; }
 
     /* ================= CTA ================= */
-    .cta { padding: 40px 0 100px; }
+    .cta { padding: 20px 0 50px; }
     .cta-box { background: var(--yellow); border-radius: 30px; padding: 85px 40px; text-align: center; box-shadow: var(--shadow-hover); }
     .cta-box h2 { font-size: clamp(38px,6vw,62px); line-height: 1; letter-spacing: -.05em; font-weight: 900; }
     .cta-box p { max-width: 520px; margin: 18px auto 30px; color: #333; font-size: 17px; }
@@ -195,9 +219,8 @@
     .email-line a { font-weight: 900; text-decoration: underline; }
 
     /* ================= FLOATING ROUNDED FOOTER ================= */
-    footer { padding: 40px 0; }
-    .footer-container { width: min(92%, var(--max)); margin: 0 auto; background: var(--black); color: white; padding: 40px; border-radius: var(--radius); display: flex; justify-content: space-between; align-items: center; text-align: center; box-shadow: var(--shadow-hover); }
-    .footer-logo { filter: brightness(0) invert(1); height: 28px; width: auto; object-fit: contain; }
+    footer { padding: 10px 0; }
+    .footer-container { width: min(92%, var(--max)); margin: 0 auto; background: var(--black); color: white; padding: 10px; border-radius: var(--radius); display: flex; justify-content: space-between; align-items: center; text-align: center; box-shadow: var(--shadow-hover); }
     .footer-text { font-size: 14px; color: #999; margin-top: 6px; }
 
     /* ================= MODALS ================= */
@@ -236,7 +259,7 @@
   <nav>
     <div class="container nav-inner">
       <a href="#" class="logo-wrap">
-        <img src="logo.png" alt="ByYash Logo" class="logo-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+         <img src="logo.png" alt="ByYash Logo" class="logo-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
         <div class="logo-fallback">By<span>Yash</span>.in</div>
       </a>
       <button class="menu-toggle" id="menuToggle" aria-label="Toggle Menu"><span></span><span></span></button>
@@ -285,41 +308,47 @@
       <div class="container" style="margin-bottom: 35px;">
         <div class="section-heading" style="margin-bottom: 0;">
           <h2>Work that makes <span class="highlight">people stop.</span></h2>
-          <p>A moving showcase of high-CTR thumbnails crafted across genres.</p>
+          <p>All credit goes to our designers.</p>
         </div>
       </div>
       
       <!-- Strip 1: Left -->
       <div class="marquee">
         <div class="marquee-track">
-          <div class="work-card"><img src="thumb1.jpg" alt="Thumb 1"></div>
-          <div class="work-card"><img src="thumb2.jpg" alt="Thumb 2"></div>
-          <div class="work-card"><img src="thumb3.jpg" alt="Thumb 3"></div>
-          <div class="work-card"><img src="thumb4.jpg" alt="Thumb 4"></div>
-          <div class="work-card"><img src="thumb10.jpg" alt="Thumb 10"></div>
-          <div class="work-card"><img src="thumb11.jpg" alt="Thumb 11"></div>
+          <div class="work-card"><img src="thumb1.jpg" alt="Thumb 1"><span class="designer-badge">By Nikhil</span></div>
+          <div class="work-card"><img src="thumb2.jpg" alt="Thumb 2"><span class="designer-badge">By Nikhil</span></div>
+          <div class="work-card"><img src="thumb3.jpg" alt="Thumb 3"><span class="designer-badge">By Nikhil</span></div>
+          <div class="work-card"><img src="thumb4.jpg" alt="Thumb 4"><span class="designer-badge">By nikhil</span></div>
+          <div class="work-card"><img src="thumb5.jpg" alt="Thumb 5"><span class="designer-badge">By Nikhil</span></div>
+          <div class="work-card"><img src="thumb6.jpg" alt="Thumb 6"><span class="designer-badge">By Nikhil</span></div>
+          <div class="work-card"><img src="thumb16.jpg" alt="Thumb 16"><span class="designer-badge">By Saksham</span></div>
+          <div class="work-card"><img src="thumb17.jpg" alt="Thumb 17"><span class="designer-badge">By Shivam</span></div>
+          <div class="work-card"><img src="thumb18.jpg" alt="Thumb 18"><span class="designer-badge">By Shivam</span></div>
           <!-- Loop repeat -->
-          <div class="work-card"><img src="thumb1.jpg" alt="Thumb 1"></div>
-          <div class="work-card"><img src="thumb2.jpg" alt="Thumb 2"></div>
-          <div class="work-card"><img src="thumb3.jpg" alt="Thumb 3"></div>
-          <div class="work-card"><img src="thumb4.jpg" alt="Thumb 4"></div>
+          <div class="work-card"><img src="thumb6.jpg" alt="Thumb 6"><span class="designer-badge">By Nikhil</span></div>
+          <div class="work-card"><img src="thumb16.jpg" alt="Thumb 16"><span class="designer-badge">By Saksham</span></div>
+          <div class="work-card"><img src="thumb17.jpg" alt="Thumb 17"><span class="designer-badge">By Shivam</span></div>
+          <div class="work-card"><img src="thumb18.jpg" alt="Thumb 18"><span class="designer-badge">By Shivam</span></div>
         </div>
       </div>
 
       <!-- Strip 2: Right (Reverse) -->
       <div class="marquee">
         <div class="marquee-track reverse">
-          <div class="work-card"><img src="thumb12.jpg" alt="Thumb 12"></div>
-          <div class="work-card"><img src="thumb13.jpg" alt="Thumb 13"></div>
-          <div class="work-card"><img src="thumb14.jpg" alt="Thumb 14"></div>
-          <div class="work-card"><img src="thumb15.jpg" alt="Thumb 15"></div>
-          <div class="work-card"><img src="thumb1.jpg" alt="Thumb 1"></div>
-          <div class="work-card"><img src="thumb2.jpg" alt="Thumb 2"></div>
+          <div class="work-card"><img src="thumb7.jpg" alt="Thumb 7"><span class="designer-badge">By Saksham</span></div>
+          <div class="work-card"><img src="thumb8.jpg" alt="Thumb 8"><span class="designer-badge">By Saksham</span></div>
+          <div class="work-card"><img src="thumb9.jpg" alt="Thumb 9"><span class="designer-badge">By Saksham</span></div>
+          <div class="work-card"><img src="thumb10.jpg" alt="Thumb 10"><span class="designer-badge">By Sarwan</span></div>
+          <div class="work-card"><img src="thumb11.jpg" alt="Thumb 11"><span class="designer-badge">By Shivam</span></div>
+          <div class="work-card"><img src="thumb12.jpg" alt="Thumb 12"><span class="designer-badge">By Shivam</span></div>
+          <div class="work-card"><img src="thumb13.jpg" alt="Thumb 13"><span class="designer-badge">By Shivam</span></div>
+          <div class="work-card"><img src="thumb14.jpg" alt="Thumb 14"><span class="designer-badge">By Shivam</span></div>
+          <div class="work-card"><img src="thumb15.jpg" alt="Thumb 15"><span class="designer-badge">By Nikhil</span></div>
           <!-- Loop repeat -->
-          <div class="work-card"><img src="thumb12.jpg" alt="Thumb 12"></div>
-          <div class="work-card"><img src="thumb13.jpg" alt="Thumb 13"></div>
-          <div class="work-card"><img src="thumb14.jpg" alt="Thumb 14"></div>
-          <div class="work-card"><img src="thumb15.jpg" alt="Thumb 15"></div>
+          <div class="work-card"><img src="thumb12.jpg" alt="Thumb 12"><span class="designer-badge">By Shivam</span></div>
+          <div class="work-card"><img src="thumb13.jpg" alt="Thumb 13"><span class="designer-badge">By Shivam</span></div>
+          <div class="work-card"><img src="thumb14.jpg" alt="Thumb 14"><span class="designer-badge">By Shivam</span></div>
+          <div class="work-card"><img src="thumb15.jpg" alt="Thumb 15"><span class="designer-badge">By Nikhil</span></div>
         </div>
       </div>
     </section>
@@ -351,39 +380,42 @@
       
       <div class="designer-marquee">
         <div class="designer-track">
+          <!-- Designer 1 -->
           <div class="designer-card">
-            <div class="designer-avatar">Y</div>
+            <div class="designer-avatar"><img src="yash.jpg" alt="Yash Sharma"></div>
             <h3>Yash Sharma</h3>
-            <span class="designer-role">Lead Strategist</span>
-            <p>Specializes in audience retention hooks, packaging psychology, and high-CTR layout composition.</p>
+            <span class="designer-role">Founder</span>
+            <p>Focused on thumbnail strategy, creator growth, and building a streamlined creative system that turns ideas into click-worthy visuals.</p>
           </div>
+          <!-- Designer 2 -->
           <div class="designer-card">
-            <div class="designer-avatar">A</div>
-            <h3>Aman Verma</h3>
+            <div class="designer-avatar"><img src="aman.jpg" alt="Nikhil"></div>
+            <h3>Nikhil</h3>
             <span class="designer-role">Senior Visual Designer</span>
             <p>Master of 3D lighting, depth, high-contrast color grading, and clean typography layouts.</p>
           </div>
+          <!-- Designer 3 -->
           <div class="designer-card">
-            <div class="designer-avatar">R</div>
+            <div class="designer-avatar"><img src="rohan.jpg" alt="Rohan Das"></div>
             <h3>Rohan Das</h3>
             <span class="designer-role">Thumbnail Specialist</span>
             <p>Focuses on gaming, tech, and commentary niches with dynamic, narrative-driven thumbnail concepts.</p>
           </div>
           <!-- Duplicate for smooth infinite loop -->
           <div class="designer-card">
-            <div class="designer-avatar">Y</div>
+            <div class="designer-avatar"><img src="yash.jpg" alt="Yash Sharma"></div>
             <h3>Yash Sharma</h3>
-            <span class="designer-role">Lead Strategist</span>
-            <p>Specializes in audience retention hooks, packaging psychology, and high-CTR layout composition.</p>
+            <span class="designer-role">Founder</span>
+            <p>Focused on thumbnail strategy, creator growth, and building a streamlined creative system that turns ideas into click-worthy visuals.</p>
           </div>
           <div class="designer-card">
-            <div class="designer-avatar">A</div>
+            <div class="designer-avatar"><img src="aman.jpg" alt="Aman Verma"></div>
             <h3>Aman Verma</h3>
             <span class="designer-role">Senior Visual Designer</span>
             <p>Master of 3D lighting, depth, high-contrast color grading, and clean typography layouts.</p>
           </div>
           <div class="designer-card">
-            <div class="designer-avatar">R</div>
+            <div class="designer-avatar"><img src="rohan.jpg" alt="Rohan Das"></div>
             <h3>Rohan Das</h3>
             <span class="designer-role">Thumbnail Specialist</span>
             <p>Focuses on gaming, tech, and commentary niches with dynamic, narrative-driven thumbnail concepts.</p>
@@ -391,6 +423,34 @@
         </div>
       </div>
     </section>
+    
+        <!-- CSS for Marquee & Images -->
+    <style>
+      .designer-marquee {
+        overflow: hidden;
+        width: 100%;
+      }
+      .designer-track {
+        display: flex;
+        gap: 20px;
+        width: max-content;
+        animation: scrollDesigners 30s linear infinite;
+      }
+      .designer-section:hover .designer-track {
+        animation-play-state: running;
+      }
+      .designer-avatar img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 50%;
+        display: block;
+      }
+      @keyframes scrollDesigners {
+        from { transform: translateX(0); }
+        to { transform: translateX(-50%); }
+      }
+    </style>
 
     <!-- ================= SERVICES ================= -->
     <section id="services">
@@ -403,7 +463,8 @@
           <div class="service-card">
             <h3>One-Off</h3>
             <p>Perfect when you need a single high-impact thumbnail.</p>
-            <div class="price">₹1,499</div>
+            <span class="price-label">Starting at</span>
+             <div class="price">₹1,499</div>
             <span class="price-note">Per single thumbnail</span>
             <ul>
               <li>1 high-CTR thumbnail</li>
@@ -418,7 +479,8 @@
             <span class="popular-badge">MOST POPULAR</span>
             <h3>Creator Pack</h3>
             <p>For creators publishing regularly wanting consistent visuals.</p>
-            <div class="price">₹5,499</div>
+            <span class="price-label">Starting at</span>
+<div class="price">₹5,499</div>
             <span class="price-note">Pack of 4 thumbnails</span>
             <ul>
               <li>4 thumbnails total</li>
@@ -432,7 +494,8 @@
           <div class="service-card">
             <h3>Growth</h3>
             <p>Built for active channels publishing multiple times a month.</p>
-            <div class="price">₹9,999</div>
+           <span class="price-label">Starting at</span>
+ <div class="price">₹9,999</div>
             <span class="price-note">Pack of 8 thumbnails</span>
             <ul>
               <li>8 thumbnails total</li>
@@ -453,26 +516,131 @@
           <h2>Frequently Asked <span class="highlight">Questions.</span></h2>
           <p>Got questions about how we work? We've got answers.</p>
         </div>
-        <div class="faq-grid">
-          <div class="faq-card">
-            <h3>Thumbnail delivery mein kitna time lagta hai?</h3>
-            <p>Typical delivery window 48 se 72 hours ke beech ki hoti hai depending on your current queue slot.</p>
+        
+        <div class="faq-container">
+          <!-- FAQ Item 1 -->
+          <div class="faq-item">
+            <button class="faq-question">
+              <span>01. What is ByYash.in?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>ByYash.in is a YouTube Thumbnail Studio creating strategy-led thumbnails designed around your video, audience and hook.</p>
+            </div>
           </div>
-          <div class="faq-card">
-            <h3>Kya thumbnails mein revisions milte hain?</h3>
-            <p>Haan, har package mein 2 ya usse zyada revisions included hote hain taaki aapko bilkul perfect result mile.</p>
+
+          <!-- FAQ Item 2 -->
+          <div class="faq-item">
+            <button class="faq-question">
+              <span>02. How does the process work?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>You share your video or brief → we develop the thumbnail direction → design → revisions → final delivery.</p>
+            </div>
           </div>
-          <div class="faq-card">
-            <h3>Order karne ke baad process kaise kaam karta hai?</h3>
-            <p>Aap form mein apna package select karke YouTube link aur details dete hain. Hum video concept par strategy-led thumbnail taiyar karte hain.</p>
+
+          <!-- FAQ Item 3 -->
+          <div class="faq-item">
+            <button class="faq-question">
+              <span>03. Do I need to find a designer myself?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>No. ByYash.in manages the creative workflow for you, so you have one point of contact from start to finish.</p>
+            </div>
           </div>
-          <div class="faq-card">
-            <h3>Kya aap custom ya bulk orders bhi lete hain?</h3>
-            <p>Haan, agar aapko regular ya alag se custom requirements chahiye toh aap "Other / Custom Inquiry" select kar sakte hain.</p>
+
+          <!-- FAQ Item 4 -->
+          <div class="faq-item">
+            <button class="faq-question">
+              <span>04. How long does a thumbnail take?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>Our standard turnaround is typically 24–48 hours, depending on the project and requirements.</p>
+            </div>
+          </div>
+
+          <!-- FAQ Item 5 -->
+          <div class="faq-item">
+            <button class="faq-question">
+              <span>05. How many revisions are included?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>Our standard packages include up to 2 revisions per thumbnail.</p>
+            </div>
+          </div>
+
+          <!-- FAQ Item 6 -->
+          <div class="faq-item">
+            <button class="faq-question">
+              <span>06. How do I start a project?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>Click “Start a Project” or email us at hi@byyash.in with your requirements, and we'll take it from there.</p>
+            </div>
           </div>
         </div>
       </div>
     </section>
+    
+    <!-- CSS Styling for Dropdown FAQ -->
+    <style>
+      .faq-section { background: #fff; padding: 70px 0; }
+      .faq-container {
+        max-width: 800px;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+      .faq-item {
+        background: var(--light, #f7f5ef);
+        border: 1px solid var(--border, #dedbd2);
+        border-radius: var(--radius-sm, 14px);
+        overflow: hidden;
+        transition: var(--transition);
+      }
+      .faq-question {
+        width: 100%;
+        background: none;
+        border: none;
+        padding: 20px 24px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        font-size: 16px;
+        font-weight: 800;
+        color: var(--black);
+        text-align: left;
+        cursor: pointer;
+      }
+      .faq-icon {
+        font-size: 20px;
+        font-weight: 600;
+        transition: transform 0.3s ease;
+      }
+      .faq-answer {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.35s cubic-bezier(0.16, 1, 0.3, 1), padding 0.3s ease;
+        padding: 0 24px;
+        color: var(--gray);
+        font-size: 14px;
+        line-height: 1.6;
+      }
+      .faq-item.active .faq-answer {
+        max-height: 200px;
+        padding: 0 24px 20px 24px;
+      }
+      .faq-item.active .faq-icon {
+        transform: rotate(45deg);
+        color: var(--yellow);
+      }
+    </style>
 
     <!-- ================= WHY US ================= -->
     <section class="why-section" id="why">
@@ -505,7 +673,6 @@
   <footer>
     <div class="footer-container">
       <div style="text-align: left;">
-        <img src="logo.png" alt="ByYash Logo" class="footer-logo" onerror="this.style.display='none';">
         <p class="footer-text">© 2026 ByYash.in Studio. All rights reserved.</p>
       </div>
       <div style="font-size: 13px; color: var(--yellow); font-weight: 700;">
@@ -636,6 +803,21 @@
       document.body.classList.remove('modal-open');
     });
 
+    // FAQ Accordion Toggle Logic
+    document.querySelectorAll('.faq-question').forEach(question => {
+      question.addEventListener('click', () => {
+        const item = question.parentElement;
+        
+        document.querySelectorAll('.faq-item').forEach(otherItem => {
+          if (otherItem !== item) {
+            otherItem.classList.remove('active');
+          }
+        });
+
+        item.classList.toggle('active');
+      });
+    });
+
     // Form Submission with EmailJS & Direct WhatsApp Redirect
     projectForm.addEventListener('submit', function(e) {
       e.preventDefault();
@@ -684,7 +866,7 @@
 
            // 2. Open WhatsApp Redirect after a short delay
            setTimeout(() => {
-             const ownerNumber = "919876543210"; // <-- Yahan apna WhatsApp number daal dein (bina '+' ke, country code ke sath)
+             const ownerNumber = "917579650065";
              const waMessage = `Hello Yash, I am ${userName} (${userEmail}). I want to order: *${selectedPlan}*. My Channel/Video link is: ${channelLink}`;
              const encodedMessage = encodeURIComponent(waMessage);
              window.open(`https://wa.me/${ownerNumber}?text=${encodedMessage}`, '_blank');
@@ -697,7 +879,7 @@
            
            // Fallback to WhatsApp even if email fails
            hideModal();
-           const ownerNumber = "919876543210"; // <-- Apna number yahan bhi daalein
+           const ownerNumber = "917579650065";
            const waMessage = `Hello Yash, I am ${userName}. I want to order: *${selectedPlan}*. Link: ${channelLink}`;
            window.open(`https://wa.me/${ownerNumber}?text=${encodeURIComponent(waMessage)}`, '_blank');
         });
