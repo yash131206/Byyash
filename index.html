@@ -870,7 +870,6 @@
              const waMessage = `Hello Yash, I am ${userName} (${userEmail}). I want to order: *${selectedPlan}*. My Channel/Video link is: ${channelLink}`;
              const encodedMessage = encodeURIComponent(waMessage);
              window.location.href='https://api.whatsapp.com/send?=${ownerNumber}?text=${encodedMessage}';
-           }, 1500);
 
         }, function(error) {
            submitBtn.textContent = "Send Inquiry & Connect WhatsApp";
