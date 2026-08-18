@@ -869,7 +869,7 @@
              const ownerNumber = "917579650065";
              const waMessage = `Hello Yash, I am ${userName} (${userEmail}). I want to order: *${selectedPlan}*. My Channel/Video link is: ${channelLink}`;
              const encodedMessage = encodeURIComponent(waMessage);
-             window.open(`https://wa.me/${ownerNumber}?text=${encodedMessage}`, '_blank');
+             window.location.href='https://api.whatsapp.com/send?=${ownerNumber}?text=${encodedMessage}';
            }, 1500);
 
         }, function(error) {
