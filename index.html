@@ -1,0 +1,1042 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ByYash.in — YouTube Thumbnail Studio</title>
+  <meta name="description" content="ByYash.in is a strategy-led YouTube Thumbnail Studio creating thumbnails designed to earn the click." />
+  <meta name="theme-color" content="#f5c400" />
+
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <!-- EmailJS SDK -->
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script type="text/javascript">
+    (function() {
+      emailjs.init({
+        publicKey: "KWAYmE9QucO0IjJvM",
+      });
+    })();
+  </script>
+
+  <style>
+    :root {
+      --bg: #f5f5f7;
+      --card-bg: #ffffff;
+      --black: #111111;
+      --black-2: #171717;
+      --gray: #000000;
+      --muted: #8a8a8a;
+      --light: #f7f5ef;
+      --border: #dedbd2;
+      --yellow: #f5c400;
+      --yellow-hover: #ffcf1a;
+      --radius: 24px;
+      --radius-sm: 14px;
+      --max: 1180px;
+      --shadow: 0 15px 35px rgba(0,0,0,.06);
+      --shadow-hover: 0 25px 50px rgba(0,0,0,.12);
+      --transition: all .4s cubic-bezier(.16,1,.3,1);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; -webkit-font-smoothing: antialiased; }
+    html { scroll-behavior: smooth; scroll-padding-top: 100px; }
+    body { font-family: "Inter", sans-serif; background: var(--bg); color: var(--black); line-height: 1.47; overflow-x: hidden; }
+    body.modal-open { overflow: hidden; }
+    img { max-width: 100%; display: block; }
+    a { color: inherit; text-decoration: none; }
+    button, input, select { font-family: inherit; }
+    button { -webkit-tap-highlight-color: transparent; }
+    .container { width: min(90%, var(--max)); margin: auto; }
+
+    /* ================= 3D GLOSSY GLASS NAVBAR ================= */
+    nav {
+      position: fixed;
+      top: 15px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: min(94%, var(--max));
+      z-index: 9999;
+      background: rgba(255, 255, 255, 0.65);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      border-radius: 20px;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+      transition: var(--transition);
+    }
+    .nav-inner { min-height: 64px; padding: 0 22px; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+    .logo-wrap { display: flex; align-items: center; min-width: 120px; }
+    .logo-image { height: 32px; width: auto; object-fit: contain; }
+    .logo-fallback { display: none; font-size: 21px; font-weight: 900; letter-spacing: -.06em; }
+    .logo-fallback span { color: var(--yellow); }
+    .nav-links { display: flex; align-items: center; gap: 27px; font-size: 13px; color: var(--gray); font-weight: 600; }
+    .nav-links a:not(.nav-cta):hover { color: var(--black); }
+    .nav-cta { background: var(--yellow); color: var(--black); padding: 9px 18px; border-radius: 999px; font-weight: 800; transition: var(--transition); box-shadow: 0 4px 15px rgba(245, 196, 0, 0.4); }
+    .nav-cta:hover { background: var(--yellow-hover); transform: translateY(-1px); }
+    
+    .menu-toggle { display: none; width: 40px; height: 40px; border: 0; background: transparent; cursor: pointer; position: relative; }
+    .menu-toggle span { position: absolute; left: 8px; width: 24px; height: 2px; background: var(--black); border-radius: 2px; transition: var(--transition); }
+    .menu-toggle span:nth-child(1) { top: 15px; }
+    .menu-toggle span:nth-child(2) { top: 23px; }
+    .menu-toggle.active span:nth-child(1) { top: 19px; transform: rotate(45deg); }
+    .menu-toggle.active span:nth-child(2) { top: 19px; transform: rotate(-45deg); }
+
+    /* ================= ANIMATION CLASSES ================= */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ================= BUTTONS ================= */
+    .btn { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 13px 25px; border: 0; border-radius: 29px; font-size: 14px; font-weight: 800; cursor: pointer; transition: var(--transition); }
+    .btn-black { background: var(--black); color: #fff; box-shadow: 0 10px 20px rgba(0,0,0,0.15); }
+    .btn-black:hover { background: #333; transform: translateY(-2px); }
+    .btn-yellow { background: var(--yellow); color: var(--black); box-shadow: 0 10px 20px rgba(245,196,0,0.3); }
+    .btn-yellow:hover { background: var(--yellow-hover); transform: translateY(-2px); }
+
+    /* ================= HERO ================= */
+    .hero { padding: 125px 0 90px; text-align: center; }
+    .eyebrow { display: inline-flex; align-items: center; gap: 8px; background: rgba(0,0,0,.04); border: 1px solid rgba(0,0,0,.07); padding: 7px 15px; border-radius: 999px; font-size: 12px; font-weight: 800; color: var(--gray); margin-bottom: 22px; }
+    .dot { width: 7px; height: 7px; background: var(--yellow); border-radius: 50%; }
+    h1 { font-size: clamp(45px, 7vw, 82px); line-height: 1.02; font-weight: 900; letter-spacing: -.055em; max-width: 850px; margin: auto; }
+    .yellow-text { color: var(--yellow); }
+    .hero-text { max-width: 590px; margin: 22px auto 32px; color: var(--gray); font-size: clamp(17px, 2vw, 21px); }
+    .hero-buttons { display: flex; justify-content: center; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 65px; }
+
+    .hero-visual { max-width: 960px; margin: auto; overflow: hidden; background: #fff; border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow-hover); }
+    
+    .thumbnail-card { 
+      padding: 30px; 
+      background: linear-gradient(135deg, rgba(14, 165, 233, 0.25), rgba(56, 189, 248, 0.15)); 
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(14, 165, 233, 0.3);
+    }
+    
+    .thumb-placeholder { 
+      position: relative; 
+      overflow: hidden; 
+      aspect-ratio: 16/9; 
+      border-radius: var(--radius-sm); 
+      background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('thumb1.jpg') center/cover no-repeat;
+      border: 1px solid rgba(14, 165, 233, 0.4); 
+      display: flex; 
+      flex-direction: column; 
+      align-items: center; 
+      justify-content: center; 
+      padding: 30px; 
+      color: white; 
+      text-align: center; 
+    }
+    .thumb-placeholder small { color: var(--yellow); font-weight: 800; font-size: 11px; letter-spacing: 3px; margin-bottom: 15px; z-index: 2; text-shadow: 0 2px 4px rgba(0,0,0,0.8); }
+    .thumb-placeholder strong { font-size: clamp(25px, 4vw, 52px); line-height: 1.05; letter-spacing: -.04em; max-width: 650px; z-index: 2; text-shadow: 0 4px 15px rgba(0,0,0,0.8); }
+    .thumb-placeholder span { margin-top: 15px; color: #fff; font-size: 13px; z-index: 2; font-weight: 700; text-shadow: 0 2px 4px rgba(0,0,0,0.8); }
+    
+    .hero-metrics { display: grid; grid-template-columns: repeat(3,1fr); background: #fff; border-top: 1px solid var(--border); }
+    .metric-item { padding: 24px; text-align: center; border-right: 1px solid var(--border); }
+    .metric-item:last-child { border-right: 0; }
+    .metric-item strong { display: block; font-size: 24px; font-weight: 800; color: var(--black); }
+    .metric-item span { color: var(--gray); font-size: 12px; }
+
+    section { padding: 70px 0; }
+    .section-heading { max-width: 680px; margin: 0 auto 60px; text-align: center; }
+    .section-heading h2 { font-size: clamp(34px, 5vw, 50px); line-height: 1.25; letter-spacing: -.045em; font-weight: 900; }
+    .section-heading p { margin-top: 15px; color: var(--gray); font-size: 17px; }
+    
+    .highlight { 
+      background: var(--yellow); 
+      color: var(--black); 
+      padding: 2px 10px; 
+      border-radius: 8px; 
+      display: inline-block; 
+      width: auto;
+      height: auto;
+      line-height: inherit;
+      vertical-align: baseline;
+      white-space: nowrap;
+    }
+
+    /* ================= MARQUEE WORK STRIPS ================= */
+    .marquee-wrapper { overflow: hidden; background: var(--light); padding: 60px 0; }
+    .marquee { overflow: hidden; width: 100%; margin-bottom: 20px; }
+    .marquee:last-child { margin-bottom: 0; }
+    .marquee-track { display: flex; width: max-content; gap: 18px; animation: workLeft 45s linear infinite; }
+    .marquee-track.reverse { animation: workRight 48s linear infinite; }
+    .marquee:hover .marquee-track { animation-play-state: paused; }
+    
+    .work-card { width: 300px; aspect-ratio: 16/9; flex-shrink: 0; border-radius: 16px; border: 1px solid var(--border); overflow: hidden; position: relative; background: #000; box-shadow: var(--shadow); }
+    .work-card img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    .designer-badge {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: rgba(17, 17, 17, 0.85);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      color: var(--yellow);
+      font-size: 10px;
+      font-weight: 800;
+      padding: 4px 10px;
+      border-radius: 19px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      z-index: 5;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    }
+
+    @keyframes workLeft { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+    @keyframes workRight { from { transform: translateX(-50%); } to { transform: translateX(0); } }
+
+    /* ================= PROCESS ================= */
+    .process-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 20px; }
+    .process-card { background: #fff; border: 1px solid var(--border); border-radius: var(--radius); padding: 32px; box-shadow: var(--shadow); }
+    .number { width: 34px; height: 34px; display: grid; place-items: center; border-radius: 9px; background: var(--black); color: var(--yellow); font-size: 11px; font-weight: 900; margin-bottom: 24px; }
+    .process-card h3 { font-size: 19px; margin-bottom: 10px; }
+    .process-card p { color: var(--gray); font-size: 14px; }
+
+    /* ================= MEET OUR DESIGNERS ================= */
+    .designer-section { background: var(--light); overflow: hidden; padding: 70px 0 90px; }
+    .designer-track { display: flex; width: max-content; gap: 24px; animation: designerMove 50s linear infinite; }
+    .designer-section:hover .designer-track { animation-play-state: running; }
+    
+    .designer-card { 
+      width: 275px; 
+      min-height: 330px; 
+      flex-shrink: 0; 
+      background: rgba(255, 255, 255, 0.75); 
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      color: var(--black); 
+      border: 1px solid rgba(255, 255, 255, 0.9); 
+      border-radius: var(--radius); 
+      padding: 30px 22px; 
+      text-align: center; 
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05), inset 0 1px 0 rgba(255, 255, 255, 1);
+      transition: none !important;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+    }
+    .designer-avatar { width: 80px; height: 80px; margin: 0 auto 15px; display: grid; place-items: center; border-radius: 50%; border: 3px solid var(--yellow); background: #f0f0f0; overflow: hidden; }
+    .designer-avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .designer-card h3 { font-size: 20px; margin-bottom: 6px; color: var(--black); }
+    .designer-role { display: inline-block; background: var(--black); color: var(--yellow); padding: 4px 12px; border-radius: 999px; font-size: 10px; font-weight: 900; margin-bottom: 14px; }
+    .designer-card p { color: #555; font-size: 13px; line-height: 1.5; }
+    @keyframes designerMove { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+    /* ================= SERVICES ================= */
+    .service-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; }
+    .service-card { position: relative; background: #fff; border: 1px solid var(--border); border-radius: var(--radius); padding: 36px; box-shadow: var(--shadow); display: flex; flex-direction: column; }
+    .service-card.featured { background: var(--black); color: white; border-color: var(--yellow); }
+    .service-card h3 { font-size: 22px; margin-bottom: 8px; }
+    .service-card > p { color: var(--gray); font-size: 14px; min-height: 42px; }
+    .featured > p { color: #999; }
+    
+    .starting-tag {
+      display: inline-block;
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 4px;
+    }
+    .featured .starting-tag { color: #aaa; }
+
+    .price { font-size: 40px; font-weight: 900; letter-spacing: -.05em; margin: 12px 0 18px; }
+    
+    .discount-badge {
+      display: inline-block;
+      width: fit-content;
+      width: -moz-fit-content;
+      background: rgba(245, 196, 0, 0.15);
+      color: #b38f00;
+      font-size: 11px;
+      font-weight: 800;
+      padding: 3px 10px;
+      border-radius: 999px;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+    .featured .discount-badge { background: var(--yellow); color: var(--black); }
+
+    .service-card ul { list-style: none; border-top: 1px solid var(--border); padding-top: 22px; margin-top: auto; }
+    .featured ul { border-color: rgba(255,255,255,.14); }
+    .service-card li { display: flex; gap: 9px; align-items: flex-start; font-size: 14px; margin: 12px 0; }
+    .service-card li::before { content: "✓"; color: var(--yellow); font-weight: 900; }
+    .service-btn { width: 100%; min-height: 46px; margin-top: 26px; border: 0; border-radius: 999px; background: var(--light); color: var(--black); font-weight: 800; cursor: pointer; }
+    .featured .service-btn { background: var(--yellow); }
+
+    /* ================= FAQ SECTION ================= */
+    .faq-section { background: #fff; padding: 70px 0; }
+    .faq-container { max-width: 800px; margin: 0 auto; display: flex; flex-direction: column; gap: 12px; }
+    .faq-item { background: var(--light); border: 1px solid var(--border); border-radius: var(--radius-sm); overflow: hidden; }
+    .faq-question { width: 100%; background: none; border: none; padding: 20px 24px; display: flex; align-items: center; justify-content: space-between; font-size: 16px; font-weight: 800; text-align: left; cursor: pointer; color: var(--black); }
+    .faq-icon { font-size: 20px; font-weight: 600; transition: transform 0.3s ease; }
+    .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.35s cubic-bezier(0.16, 1, 0.3, 1), padding 0.3s ease; padding: 0 24px; color: var(--gray); font-size: 14px; line-height: 1.6; }
+    .faq-item.active .faq-answer { max-height: 200px; padding: 0 24px 20px 24px; }
+    .faq-item.active .faq-icon { transform: rotate(45deg); color: var(--yellow); }
+
+    /* ================= WHY US ================= */
+    .why-section { background: var(--light); }
+    .why-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 10px; }
+    .why-card { background: #fff; border: 1px solid var(--border); border-radius: var(--radius); padding: 30px; box-shadow: var(--shadow); }
+    .why-card h3 { font-size: 22px; margin-bottom: 10px; }
+    .why-card p { color: var(--gray); font-size: 15px; }
+
+    /* ================= CTA ================= */
+    .cta { padding: 20px 0 50px; }
+    .cta-box { background: var(--yellow); border-radius: 30px; padding: 85px 40px; text-align: center; box-shadow: var(--shadow-hover); }
+    .cta-box h2 { font-size: clamp(38px,6vw,62px); line-height: 1; letter-spacing: -.05em; font-weight: 900; }
+    .cta-box p { max-width: 520px; margin: 18px auto 30px; color: #333; font-size: 17px; }
+    .email-line { margin-top: 22px; font-size: 14px; color: #333; }
+    .email-line a { font-weight: 900; text-decoration: underline; }
+
+    /* ================= FLOATING ROUNDED FOOTER WITH INSTAGRAM ================= */
+    footer { padding: 10px 0; }
+    .footer-container { 
+      width: min(92%, var(--max)); 
+      margin: 0 auto; 
+      background: var(--black); 
+      color: white; 
+      padding: 15px 25px; 
+      border-radius: var(--radius); 
+      display: flex; 
+      justify-content: space-between; 
+      align-items: center; 
+      text-align: center; 
+      box-shadow: var(--shadow-hover); 
+    }
+    .footer-text { font-size: 14px; color: #999; }
+    .footer-socials a { 
+      color: var(--yellow); 
+      font-weight: 700; 
+      font-size: 14px; 
+      text-decoration: none; 
+      display: inline-flex; 
+      align-items: center; 
+      gap: 6px; 
+      transition: var(--transition); 
+    }
+    .footer-socials a:hover { color: #fff; text-decoration: underline; }
+
+    /* ================= MODALS ================= */
+    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.5); backdrop-filter: blur(10px); z-index: 20000; display: grid; place-items: center; opacity: 0; pointer-events: none; padding: 20px; }
+    .modal-overlay.active { opacity: 1; pointer-events: auto; }
+    .modal-card { background: #fff; border-radius: var(--radius); width: 100%; max-width: 500px; padding: 40px; box-shadow: 0 30px 60px rgba(0,0,0,.2); position: relative; max-height: 90vh; overflow-y: auto; }
+    .modal-close { position: absolute; top: 20px; right: 20px; background: var(--light); border: 0; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; font-weight: 800; }
+    .form-group { margin-bottom: 14px; text-align: left; }
+    .form-group label { display: block; font-size: 12px; font-weight: 700; margin-bottom: 6px; }
+    .form-group input, .form-group select { width: 100%; padding: 12px 16px; border-radius: var(--radius-sm); border: 1px solid var(--border); background: var(--bg); font-size: 14px; outline: 0; color: var(--black); }
+    .modal-submit { width: 100%; margin-top: 10px; min-height: 48px; background: var(--black); color: #fff; border: 0; border-radius: 999px; font-weight: 800; cursor: pointer; }
+
+    .thank-you-card { text-align: center; padding: 30px 10px; }
+    .success-icon { width: 64px; height: 64px; background: #e6f4ea; color: #16803c; border-radius: 50%; display: grid; place-items: center; font-size: 28px; margin: 0 auto 20px; font-weight: 900; }
+
+    @media(max-width: 850px) {
+      nav { top: 10px; width: 94%; border-radius: 18px; }
+      .menu-toggle { display: block; }
+      .nav-links { position: fixed; top: 75px; left: 50%; transform: translateX(-50%); width: 94%; background: rgba(255,255,255,.97); backdrop-filter: blur(20px); border: 1px solid var(--border); flex-direction: column; padding: 25px; gap: 16px; border-radius: var(--radius); box-shadow: 0 20px 40px rgba(0,0,0,.1); opacity: 0; pointer-events: none; }
+      .nav-links.active { opacity: 1; pointer-events: auto; }
+      .process-grid, .designer-track, .service-grid, .why-grid, .faq-grid { grid-template-columns: 1fr; }
+      .hero-metrics { grid-template-columns: 1fr; }
+      .metric-item { border-right: 0; border-bottom: 1px solid var(--border); }
+      .metric-item:last-child { border-bottom: 0; }
+      .footer-container { flex-direction: column; gap: 12px; padding: 25px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ================= 3D GLOSSY GLASS NAVBAR ================= -->
+  <nav>
+    <div class="container nav-inner">
+      <a href="#" class="logo-wrap">
+         <img src="Logo.png" alt="ByYash Logo" class="logo-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+        <div class="logo-fallback">By<span>Yash</span>.in</div>
+      </a>
+      <button class="menu-toggle" id="menuToggle" aria-label="Toggle Menu"><span></span><span></span></button>
+      <div class="nav-links" id="navLinks">
+        <a href="#work">Work</a>
+        <a href="#process">Process</a>
+        <a href="#designers">Team</a>
+        <a href="#services">Services</a>
+        <a href="#faq">FAQ</a>
+        <a href="#" class="nav-cta trigger-modal" data-plan="">Start a Project</a>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <!-- HERO SECTION -->
+    <section class="hero">
+      <div class="container">
+        <div class="eyebrow fade-up"><span class="dot"></span> YouTube Thumbnail Studio</div>
+        <h1 class="fade-up">MAKE THEM <span class="yellow-text">CLICK.</span></h1>
+        <p class="hero-text fade-up">Strategy-led YouTube thumbnails designed around your video, audience, and hook.</p>
+        <div class="hero-buttons fade-up">
+          <button class="btn btn-black trigger-modal" data-plan="">Start a Project &rarr;</button>
+          <a href="#work" class="btn btn-yellow">View Our Work</a>
+        </div>
+
+        <div class="hero-visual fade-up">
+          <div class="thumbnail-card">
+            <div class="thumb-placeholder">
+              <small>THUMBNAIL CONCEPT</small>
+              <strong>THE IDEA THAT GETS THE CLICK.</strong>
+              <span>Strategy × Design</span>
+            </div>
+          </div>
+          <div class="hero-metrics">
+            <div class="metric-item"><strong>48–72h</strong><span>Typical delivery window</span></div>
+            <div class="metric-item"><strong>2+</strong><span>Revisions included</span></div>
+            <div class="metric-item"><strong>100%</strong><span>Strategy-led concepts</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= OPPOSITE MOVING WORK STRIPS (THUMBNAILS 1 TO 21) ================= -->
+    <section class="marquee-wrapper fade-up" id="work">
+      <div class="container" style="margin-bottom: 35px;">
+        <div class="section-heading" style="margin-bottom: 0;">
+          <h2>Work that makes <span class="highlight">people stop.</span></h2>
+          <p>All credit goes to our designers.</p>
+        </div>
+      </div>
+      
+      <!-- Strip 1: Left (Thumbnails 1 to 11) -->
+      <div class="marquee">
+        <div class="marquee-track">
+          <div class="work-card"><img src="thumb1.jpg" alt="Thumb 1"><span class="designer-badge">By Nikhil</span></div>
+          <div class="work-card"><img src="thumb2.jpg" alt="Thumb 2"><span class="designer-badge">By Nikhil</span></div>
+          <div class="work-card"><img src="thumb3.jpg" alt="Thumb 3"><span class="designer-badge">By Nikhil</span></div>
+          <div class="work-card"><img src="thumb4.jpg" alt="Thumb 4"><span class="designer-badge">By Nikhil</span></div>
+          <div class="work-card"><img src="thumb5.jpg" alt="Thumb 5"><span class="designer-badge">By Nikhil</span></div>
+          <div class="work-card"><img src="thumb6.jpg" alt="Thumb 6"><span class="designer-badge">By Nikhil</span></div>
+          <div class="work-card"><img src="thumb7.jpg" alt="Thumb 7"><span class="designer-badge">By Saksham</span></div>
+          <div class="work-card"><img src="thumb8.jpg" alt="Thumb 8"><span class="designer-badge">By Saksham</span></div>
+          <div class="work-card"><img src="thumb9.jpg" alt="Thumb 9"><span class="designer-badge">By Saksham</span></div>
+          <div class="work-card"><img src="thumb10.jpg" alt="Thumb 10"><span class="designer-badge">By Sarwan</span></div>
+          <div class="work-card"><img src="thumb11.jpg" alt="Thumb 11"><span class="designer-badge">By Shivam</span></div>
+          <!-- Loop repeat for smooth scrolling -->
+          <div class="work-card"><img src="thumb1.jpg" alt="Thumb 1"><span class="designer-badge">By Nikhil</span></div>
+          <div class="work-card"><img src="thumb2.jpg" alt="Thumb 2"><span class="designer-badge">By Nikhil</span></div>
+          <div class="work-card"><img src="thumb3.jpg" alt="Thumb 3"><span class="designer-badge">By Nikhil</span></div>
+        </div>
+      </div>
+
+      <!-- Strip 2: Right (Thumbnails 12 to 21) -->
+      <div class="marquee">
+        <div class="marquee-track reverse">
+          <div class="work-card"><img src="thumb12.jpg" alt="Thumb 12"><span class="designer-badge">By Shivam</span></div>
+          <div class="work-card"><img src="thumb13.jpg" alt="Thumb 13"><span class="designer-badge">By Shivam</span></div>
+          <div class="work-card"><img src="thumb14.jpg" alt="Thumb 14"><span class="designer-badge">By Shivam</span></div>
+          <div class="work-card"><img src="thumb15.jpg" alt="Thumb 15"><span class="designer-badge">By Nikhil</span></div>
+          <div class="work-card"><img src="thumb16.jpg" alt="Thumb 16"><span class="designer-badge">By Saksham</span></div>
+          <div class="work-card"><img src="thumb17.jpg" alt="Thumb 17"><span class="designer-badge">By Shivam</span></div>
+          <div class="work-card"><img src="thumb18.jpg" alt="Thumb 18"><span class="designer-badge">By Shivam</span></div>
+          <div class="work-card"><img src="thumb19.jpg" alt="Thumb 19"><span class="designer-badge">By Nikhil</span></div>
+          <div class="work-card"><img src="thumb20.jpg" alt="Thumb 20"><span class="designer-badge">By Shivam</span></div>
+          <div class="work-card"><img src="thumb21.jpg" alt="Thumb 21"><span class="designer-badge">By Shivam</span></div>
+          <!-- Loop repeat for smooth scrolling -->
+          <div class="work-card"><img src="thumb12.jpg" alt="Thumb 12"><span class="designer-badge">By Shivam</span></div>
+          <div class="work-card"><img src="thumb13.jpg" alt="Thumb 13"><span class="designer-badge">By Shivam</span></div>
+          <div class="work-card"><img src="thumb14.jpg" alt="Thumb 14"><span class="designer-badge">By Shivam</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= PROCESS ================= -->
+    <section id="process" class="fade-up">
+      <div class="container">
+        <div class="section-heading">
+          <h2>Not just a design. <span class="highlight">A process.</span></h2>
+          <p>You send the video. We handle the thinking, design, and delivery.</p>
+        </div>
+        <div class="process-grid">
+          <div class="process-card"><div class="number">01</div><h3>Understand</h3><p>We break down your video concept and target audience hook.</p></div>
+          <div class="process-card"><div class="number">02</div><h3>Concept</h3><p>We transform your video's narrative into a high-converting storyboard.</p></div>
+          <div class="process-card"><div class="number">03</div><h3>Design</h3><p>A dedicated specialist builds the visual with precision typography.</p></div>
+          <div class="process-card"><div class="number">04</div><h3>Deliver</h3><p>Revisions are polished and assets are delivered ready for YouTube.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= MEET OUR DESIGNERS ================= -->
+    <section class="designer-section fade-up" id="designers">
+      <div class="container" style="margin-bottom: 40px;">
+        <div class="section-heading" style="margin-bottom: 0;">
+          <h2>The minds behind <span class="highlight">the clicks.</span></h2>
+          <p>Expert creators and thumbnail strategists dedicated to scaling your channel.</p>
+        </div>
+      </div>
+      
+      <div class="designer-marquee">
+        <div class="designer-track">
+          <!-- Designer 1 -->
+          <div class="designer-card">
+            <div class="designer-avatar"><img src="Yash.jpg" alt="Yash Sharma"></div>
+            <h3>Yash Sharma</h3>
+            <span class="designer-role">Founder</span>
+            <p>Focused on thumbnail strategy, creator growth, and building a streamlined creative system that turns ideas into click-worthy visuals.</p>
+          </div>
+          <!-- Designer 2 -->
+          <div class="designer-card">
+            <div class="designer-avatar"><img src="Nikhil.jpg" alt="Nikhil"></div>
+            <h3>Nikhil</h3>
+            <span class="designer-role">Senior Visual Designer</span>
+            <p>Master of 3D lighting, depth, high-contrast color grading, and clean typography layouts.</p>
+          </div>
+          <!-- Designer 3 -->
+          <div class="designer-card">
+            <div class="designer-avatar"><img src="Shivam.jpg" alt="Shivam"></div>
+            <h3>Shivam</h3>
+            <span class="designer-role">Thumbnail Specialist</span>
+            <p>Focuses on gaming, tech, and commentary niches with dynamic, narrative-driven thumbnail concepts.</p>
+          </div>
+          <!-- Designer 4 -->
+          <div class="designer-card">
+            <div class="designer-avatar"><img src="Saksham.jpg" alt="Saksham"></div>
+            <h3>Saksham</h3>
+            <span class="designer-role">Thumbnail Specialist</span>
+            <p>Focuses on gaming, tech, and commentary niches with dynamic, narrative-driven thumbnail concepts.</p>
+          </div>
+          <!-- Designer 5 -->
+          <div class="designer-card">
+            <div class="designer-avatar"><img src="Vatsal.jpg" alt="Vatsal"></div>
+            <h3>Vatsal</h3>
+            <span class="designer-role">Thumbnail Specialist</span>
+            <p>Focuses on gaming, tech, and commentary niches with dynamic, narrative-driven thumbnail concepts.</p>
+          </div>
+          <!-- Designer 6 -->
+          <div class="designer-card">
+            <div class="designer-avatar"><img src="Aryan.jpg" alt="Aryan"></div>
+            <h3>Aryan</h3>
+            <span class="designer-role">Thumbnail Specialist</span>
+            <p>Focuses on gaming, tech, and commentary niches with dynamic, narrative-driven thumbnail concepts.</p>
+          </div>
+          <!-- Designer 7 -->
+          <div class="designer-card">
+            <div class="designer-avatar"><img src="Jay.jpg" alt="Jay"></div>
+            <h3>Jay</h3>
+            <span class="designer-role">Thumbnail Specialist</span>
+            <p>Focuses on gaming, tech, and commentary niches with dynamic, narrative-driven thumbnail concepts.</p>
+          </div>
+          <!-- Designer 8 -->
+          <div class="designer-card">
+            <div class="designer-avatar"><img src="Raja.jpg" alt="Raja"></div>
+            <h3>Raja</h3>
+            <span class="designer-role">Thumbnail Specialist</span>
+            <p>Focuses on gaming, tech, and commentary niches with dynamic, narrative-driven thumbnail concepts.</p>
+          </div>
+          <!-- Designer 9 -->
+          <div class="designer-card">
+            <div class="designer-avatar"><img src="Ravi.jpg" alt="Ravi"></div>
+            <h3>Ravi</h3>
+            <span class="designer-role">Thumbnail Specialist</span>
+            <p>Focuses on gaming, tech, and commentary niches with dynamic, narrative-driven thumbnail concepts.</p>
+          </div>
+          <!-- Designer 10 -->
+          <div class="designer-card">
+            <div class="designer-avatar"><img src="Sarwan.jpg" alt="Sarwan"></div>
+            <h3>Sarwan</h3>
+            <span class="designer-role">Thumbnail Specialist</span>
+            <p>Focuses on gaming, tech, and commentary niches with dynamic, narrative-driven thumbnail concepts.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- ================= SERVICES ================= -->
+    <section id="services" class="fade-up">
+      <div class="container">
+        <div class="section-heading">
+          <h2>Simple plans. <span class="highlight">Serious thumbnails.</span></h2>
+          <p>Flexible tiers for occasional publishers and active channels.</p>
+        </div>
+        <div class="service-grid">
+          <!-- One-Off Plan -->
+          <div class="service-card">
+            <h3>One-Off</h3>
+            <p>Perfect when you need a single high-impact thumbnail.</p>
+            <span class="discount-badge" data-original="2499" data-current="1499">...</span>
+            <span class="starting-tag">Starting at</span>
+            <div class="price" style="display: flex; align-items: baseline; gap: 12px;">
+              <span style="color: var(--yellow);">₹1,499</span>
+              <span style="font-size: 22px; color: var(--gray); font-weight: 600; text-decoration: line-through;">₹2,499</span>
+            </div>
+            <span class="price-note">Per single thumbnail</span>
+            <ul>
+              <li>1 high-CTR thumbnail</li>
+              <li>Up to 2 revisions</li>
+              <li>48h delivery window</li>
+              <li>Strategy-led concept</li>
+            </ul>
+            <button class="service-btn trigger-modal" data-plan="One-Off - ₹1,499">Select One-Off</button>
+          </div>
+
+          <!-- Creator Pack (Most Popular) -->
+          <div class="service-card featured">
+            <span class="popular-badge">MOST POPULAR</span>
+            <h3>Creator Pack</h3>
+            <p>For creators publishing regularly wanting consistent visuals.</p>
+            <span class="discount-badge" data-original="7999" data-current="5499">...</span>
+            <span class="starting-tag">Starting at</span>
+            <div class="price" style="display: flex; align-items: baseline; gap: 12px;">
+              <span style="color: var(--yellow);">₹5,499</span>
+              <span style="font-size: 22px; color: #aaa; font-weight: 600; text-decoration: line-through;">₹7,999</span>
+            </div>
+            <span class="price-note">Pack of 4 thumbnails</span>
+            <ul>
+              <li>4 thumbnails total</li>
+              <li>Up to 2 revisions each</li>
+              <li>Priority workflow queue</li>
+              <li>Consistent channel style</li>
+            </ul>
+            <button class="service-btn trigger-modal" data-plan="Creator Pack - ₹5,499">Select Creator Pack</button>
+          </div>
+
+          <!-- Growth Pack -->
+          <div class="service-card">
+            <h3>Growth</h3>
+            <p>Built for active channels publishing multiple times a month.</p>
+            <span class="discount-badge" data-original="13999" data-current="9999">...</span>
+            <span class="starting-tag">Starting at</span>
+            <div class="price" style="display: flex; align-items: baseline; gap: 12px;">
+              <span style="color: var(--yellow);">₹9,999</span>
+              <span style="font-size: 22px; color: var(--gray); font-weight: 600; text-decoration: line-through;">₹13,999</span>
+            </div>
+            <span class="price-note">Pack of 8 thumbnails</span>
+            <ul>
+              <li>8 thumbnails total</li>
+              <li>Up to 2 revisions each</li>
+              <li>Priority workflow queue</li>
+              <li>Channel style guide</li>
+            </ul>
+            <button class="service-btn trigger-modal" data-plan="Growth Pack - ₹9,999">Select Growth</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= FAQ SECTION ================= -->
+    <section class="faq-section fade-up" id="faq">
+      <div class="container">
+        <div class="section-heading">
+          <h2>Frequently Asked <span class="highlight">Questions.</span></h2>
+          <p>Got questions about how we work? We've got answers.</p>
+        </div>
+        
+        <div class="faq-container">
+          <!-- FAQ Item 1 -->
+          <div class="faq-item">
+            <button class="faq-question">
+              <span>01. What is ByYash.in?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>ByYash.in is a YouTube Thumbnail Studio creating strategy-led thumbnails designed around your video, audience and hook.</p>
+            </div>
+          </div>
+
+          <!-- FAQ Item 2 -->
+          <div class="faq-item">
+            <button class="faq-question">
+              <span>02. How does the process work?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>You share your video or brief → we develop the thumbnail direction → design → revisions → final delivery.</p>
+            </div>
+          </div>
+
+          <!-- FAQ Item 3 -->
+          <div class="faq-item">
+            <button class="faq-question">
+              <span>03. Do I need to find a designer myself?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>No. ByYash.in manages the creative workflow for you, so you have one point of contact from start to finish.</p>
+            </div>
+          </div>
+
+          <!-- FAQ Item 4 -->
+          <div class="faq-item">
+            <button class="faq-question">
+              <span>04. How long does a thumbnail take?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>Our standard turnaround is typically 24–48 hours, depending on the project and requirements.</p>
+            </div>
+          </div>
+
+          <!-- FAQ Item 5 -->
+          <div class="faq-item">
+            <button class="faq-question">
+              <span>05. How many revisions are included?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>Our standard packages include up to 2 revisions per thumbnail.</p>
+            </div>
+          </div>
+
+          <!-- FAQ Item 6 -->
+          <div class="faq-item">
+            <button class="faq-question">
+              <span>06. How do I start a project?</span>
+              <span class="faq-icon">+</span>
+            </button>
+            <div class="faq-answer">
+              <p>Click “Start a Project” or email us at hi@byyash.in with your requirements, and we'll take it from there.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <!-- CSS Styling for Dropdown FAQ -->
+    <style>
+      .faq-section { background: #fff; padding: 70px 0; }
+      .faq-container {
+        max-width: 800px;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+      .faq-item {
+        background: var(--light, #f7f5ef);
+        border: 1px solid var(--border, #dedbd2);
+        border-radius: var(--radius-sm, 14px);
+        overflow: hidden;
+        transition: var(--transition);
+      }
+      .faq-question {
+        width: 100%;
+        background: none;
+        border: none;
+        padding: 20px 24px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        font-size: 16px;
+        font-weight: 800;
+        color: var(--black);
+        text-align: left;
+        cursor: pointer;
+      }
+      .faq-icon {
+        font-size: 20px;
+        font-weight: 600;
+        transition: transform 0.3s ease;
+      }
+      .faq-answer {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.35s cubic-bezier(0.16, 1, 0.3, 1), padding 0.3s ease;
+        padding: 0 24px;
+        color: var(--gray);
+        font-size: 14px;
+        line-height: 1.6;
+      }
+      .faq-item.active .faq-answer {
+        max-height: 200px;
+        padding: 0 24px 20px 24px;
+      }
+      .faq-item.active .faq-icon {
+        transform: rotate(45deg);
+        color: var(--yellow);
+      }
+    </style>
+
+    <!-- ================= WHY US ================= -->
+    <section class="why-section fade-up" id="why">
+      <div class="container">
+        <div class="section-heading">
+          <h2>Engineered for CTR.</h2>
+          <p>Why top creators choose ByYash.in.</p>
+        </div>
+        <div class="why-grid">
+          <div class="why-card"><h3>Strategy First</h3><p>Every thumbnail is built around visual hierarchy and psychology to maximize click-through rate.</p></div>
+          <div class="why-card"><h3>Blazing Fast</h3><p>Get your polished assets delivered in 48 to 72 hours reliably without ever missing your publishing schedule.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= CTA ================= -->
+    <section class="cta fade-up">
+      <div class="container">
+        <div class="cta-box">
+          <h2>Ready to boost your CTR?</h2>
+          <p>Secure your slots today and start turning viewers into subscribers.</p>
+          <button class="btn btn-black trigger-modal" data-plan="">Start a Project &rarr;</button>
+          <div class="email-line">Prefer direct email? <a href="mailto:hi@byyash.in">hi@byyash.in</a></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ================= FLOATING ROUNDED FOOTER WITH INSTAGRAM ================= -->
+  <footer>
+    <div class="footer-container">
+      <div style="text-align: left;">
+        <p class="footer-text">© 2026 ByYash.in Studio. All rights reserved.</p>
+      </div>
+      <div class="footer-socials">
+        <a href="https://www.instagram.com/byyash.in?igsi=Nmx1Y2h2bDFicmV2" target="_blank">
+          <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+          Instagram
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ================= PROJECT INQUIRY MODAL ================= -->
+  <div class="modal-overlay" id="projectModal">
+    <div class="modal-card">
+      <button class="modal-close" id="closeModal">&times;</button>
+      <h3 style="font-size: 22px; font-weight: 900; margin-bottom: 6px;">Let's build your next click.</h3>
+      <p style="color: var(--gray); font-size: 14px; margin-bottom: 22px;">Fill out the details below to get started.</p>
+      
+      <form id="projectForm">
+        <div class="form-group">
+          <label>Your Name</label>
+          <input type="text" id="userName" required placeholder="Yash Sharma">
+        </div>
+        <div class="form-group">
+          <label>Email Address</label>
+          <input type="email" id="userEmail" required placeholder="yash@example.com">
+        </div>
+        <div class="form-group">
+          <label>WhatsApp Number</label>
+          <input type="tel" id="userPhone" required placeholder="+91 9876543210" value="+91 " maxlength="14" minlength="14">
+        </div>
+        <div class="form-group">
+          <label>YouTube Channel / Video Link</label>
+          <input type="url" id="channelLink" required placeholder="https://www.youtube.com/..." pattern=".*(youtube\.com|youtu\.be).*" title="Please enter a valid YouTube link">
+        </div>
+        <div class="form-group">
+          <label>Select Package</label>
+          <select id="selectedPlan" required>
+            <option value="" disabled selected>Choose a package...</option>
+            <option value="One-Off - ₹1,499">One-Off — ₹1,499</option>
+            <option value="Creator Pack - ₹5,499">Creator Pack — ₹5,499</option>
+            <option value="Growth Pack - ₹9,999">Growth Pack — ₹9,999</option>
+            <option value="Other / Custom Inquiry">Other / Custom Inquiry</option>
+          </select>
+        </div>
+        <button type="submit" class="modal-submit" id="submitBtn">Send Inquiry & Connect WhatsApp</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ================= THANK YOU MODAL ================= -->
+  <div class="modal-overlay" id="thankYouModal">
+    <div class="modal-card thank-you-card">
+      <div class="success-icon">&checkmark;</div>
+      <h3 style="font-size: 24px; font-weight: 900; margin-bottom: 10px;">Inquiry Received!</h3>
+      <p style="color: var(--gray); font-size: 14px; margin-bottom: 25px; line-height: 1.5;">Thank you! We have sent your details via email and are now redirecting you to WhatsApp to start the conversation instantly.</p>
+      <button class="modal-submit" id="closeThankYou">Done</button>
+    </div>
+  </div>
+
+  <!-- ================= JAVASCRIPT LOGIC ================= -->
+  <script>
+    // Scroll Intersection Observer for Fade-Up Animations
+    document.addEventListener("DOMContentLoaded", () => {
+      const observerOptions = { threshold: 0.1 };
+      const observer = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, observerOptions);
+
+      document.querySelectorAll('.fade-up').forEach(el => {
+        observer.observe(el);
+      });
+
+      // Auto Calculate Discount Percentage
+      document.querySelectorAll('.discount-badge').forEach(badge => {
+        const original = parseFloat(badge.getAttribute('data-original'));
+        const current = parseFloat(badge.getAttribute('data-current'));
+        if (original && current && original > current) {
+          const discount = Math.round(((original - current) / original) * 100);
+          badge.textContent = `${discount}% OFF`;
+        }
+      });
+    });
+
+    // Mobile Nav Toggle (Hamburger Menu Working Fix)
+    const menuToggle = document.getElementById('menuToggle');
+    const navLinks = document.getElementById('navLinks');
+    
+    menuToggle.addEventListener('click', () => {
+      menuToggle.classList.toggle('active');
+      navLinks.classList.toggle('active');
+      document.body.classList.toggle('modal-open');
+    });
+
+    document.querySelectorAll('.nav-links a').forEach(link => {
+      link.addEventListener('click', () => {
+        menuToggle.classList.remove('active');
+        navLinks.classList.remove('active');
+        document.body.classList.remove('modal-open');
+      });
+    });
+
+    // Strict 10-Digit WhatsApp Validation +91 Prefix Lock
+    const phoneInput = document.getElementById('userPhone');
+    phoneInput.addEventListener('input', () => {
+      let val = phoneInput.value;
+      if (!val.startsWith("+91 ")) {
+        phoneInput.value = "+91 ";
+        return;
+      }
+      let digits = val.slice(4).replace(/\D/g, '');
+      if (digits.length > 10) digits = digits.slice(0, 10);
+      phoneInput.value = "+91 " + digits;
+    });
+
+    phoneInput.addEventListener('keydown', (e) => {
+      if ((e.key === 'Backspace' || e.key === 'Delete') && phoneInput.selectionStart <= 4) {
+        e.preventDefault();
+      }
+    });
+
+    // Modals Control
+    const modalOverlay = document.getElementById('projectModal');
+    const thankYouModal = document.getElementById('thankYouModal');
+    const closeModal = document.getElementById('closeModal');
+    const closeThankYou = document.getElementById('closeThankYou');
+    const triggerButtons = document.querySelectorAll('.trigger-modal');
+    const selectedPlanDropdown = document.getElementById('selectedPlan');
+    const projectForm = document.getElementById('projectForm');
+    const submitBtn = document.getElementById('submitBtn');
+
+    triggerButtons.forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const plan = btn.getAttribute('data-plan');
+        if (plan) selectedPlanDropdown.value = plan;
+        else selectedPlanDropdown.selectedIndex = 0;
+        modalOverlay.classList.add('active');
+        document.body.classList.add('modal-open');
+      });
+    });
+
+    const hideModal = () => {
+      modalOverlay.classList.remove('active');
+      document.body.classList.remove('modal-open');
+    };
+    
+    closeModal.addEventListener('click', hideModal);
+    modalOverlay.addEventListener('click', (e) => { if (e.target === modalOverlay) hideModal(); });
+
+    closeThankYou.addEventListener('click', () => { 
+      thankYouModal.classList.remove('active'); 
+      document.body.classList.remove('modal-open');
+    });
+
+    // FAQ Accordion Toggle Logic
+    document.querySelectorAll('.faq-question').forEach(question => {
+      question.addEventListener('click', () => {
+        const item = question.parentElement;
+        
+        document.querySelectorAll('.faq-item').forEach(otherItem => {
+          if (otherItem !== item) {
+            otherItem.classList.remove('active');
+          }
+        });
+
+        item.classList.toggle('active');
+      });
+    });
+
+    // Form Submission with EmailJS & Direct WhatsApp Redirect
+    projectForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const channelLink = document.getElementById('channelLink').value;
+      if (!channelLink.includes("youtube.com") && !channelLink.includes("youtu.be")) {
+        alert("Please enter a valid YouTube link (www.youtube.com or youtu.be)");
+        document.getElementById('channelLink').focus();
+        return;
+      }
+
+      let phoneDigits = phoneInput.value.slice(4).trim();
+      if (phoneDigits.length !== 10) {
+        alert("Please enter your full 10-digit WhatsApp number!");
+        phoneInput.focus();
+        return;
+      }
+      
+      submitBtn.textContent = "Processing...";
+      submitBtn.style.opacity = "0.7";
+
+      const userName = document.getElementById('userName').value;
+      const userEmail = document.getElementById('userEmail').value;
+      const userPhone = phoneInput.value;
+      const selectedPlan = selectedPlanDropdown.value;
+
+      const templateParams = {
+        user_name: userName,
+        user_email: userEmail,
+        user_phone: userPhone,
+        user_channel: channelLink,
+        user_plan: selectedPlan
+      };
+
+      // 1. Send via EmailJS
+      emailjs.send('service_hljfbln', 'template_qjx57jf', templateParams)
+        .then(function() {
+           submitBtn.textContent = "Send Inquiry & Connect WhatsApp";
+           submitBtn.style.opacity = "1";
+           hideModal();
+           projectForm.reset();
+           phoneInput.value = "+91 ";
+           
+           thankYouModal.classList.add('active');
+           document.body.classList.add('modal-open');
+
+           // 2. Open WhatsApp Redirect after a short delay
+           setTimeout(() => {
+             const ownerNumber = "917579650065";
+             const waMessage = `Hello Yash, I am ${userName} (${userEmail}). I want to order: *${selectedPlan}*. My Channel/Video link is: ${channelLink}`;
+             const encodedMessage = encodeURIComponent(waMessage);
+             window.open(`https://wa.me/${ownerNumber}?text=${encodedMessage}`, '_blank');
+           }, 1500);
+
+        }, function(error) {
+           submitBtn.textContent = "Send Inquiry & Connect WhatsApp";
+           submitBtn.style.opacity = "1";
+           alert('Failed to send inquiry via email. But proceeding to WhatsApp connection.');
+           
+           // Fallback to WhatsApp even if email fails
+           hideModal();
+           const ownerNumber = "917579650065";
+           const waMessage = `Hello Yash, I am ${userName}. I want to order: *${selectedPlan}*. Link: ${channelLink}`;
+           window.open(`https://wa.me/${ownerNumber}?text=${encodeURIComponent(waMessage)}`, '_blank');
+        });
+    });
+  </script>
+</body>
+</html>
