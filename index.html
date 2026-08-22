@@ -28,7 +28,7 @@
       --card-bg: #ffffff;
       --black: #111111;
       --black-2: #171717;
-      --gray: #686868;
+      --gray: #000000;
       --muted: #8a8a8a;
       --light: #f7f5ef;
       --border: #dedbd2;
@@ -37,9 +37,9 @@
       --radius: 24px;
       --radius-sm: 14px;
       --max: 1180px;
-      --shadow: 0 10px 30px rgba(0,0,0,.04);
-      --shadow-hover: 0 20px 45px rgba(0,0,0,.09);
-      --transition: all .3s cubic-bezier(.16,1,.3,1);
+      --shadow: 0 15px 35px rgba(0,0,0,.06);
+      --shadow-hover: 0 25px 50px rgba(0,0,0,.12);
+      --transition: all .4s cubic-bezier(.16,1,.3,1);
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; -webkit-font-smoothing: antialiased; }
@@ -52,20 +52,20 @@
     button { -webkit-tap-highlight-color: transparent; }
     .container { width: min(90%, var(--max)); margin: auto; }
 
-    /* ================= NAVBAR ================= */
+    /* ================= 3D GLOSSY GLASS NAVBAR ================= */
     nav {
       position: fixed;
-      top: 18px;
+      top: 15px;
       left: 50%;
       transform: translateX(-50%);
       width: min(94%, var(--max));
-      z-index: 1000;
-      background: rgba(255,255,255,.86);
+      z-index: 9999;
+      background: rgba(255, 255, 255, 0.65);
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
-      border: 1px solid rgba(0,0,0,.08);
-      border-radius: 999px;
-      box-shadow: 0 10px 30px rgba(0,0,0,.06);
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      border-radius: 20px;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.9);
       transition: var(--transition);
     }
     .nav-inner { min-height: 64px; padding: 0 22px; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
@@ -75,7 +75,7 @@
     .logo-fallback span { color: var(--yellow); }
     .nav-links { display: flex; align-items: center; gap: 27px; font-size: 13px; color: var(--gray); font-weight: 600; }
     .nav-links a:not(.nav-cta):hover { color: var(--black); }
-    .nav-cta { background: var(--yellow); color: var(--black); padding: 9px 18px; border-radius: 999px; font-weight: 800; transition: var(--transition); }
+    .nav-cta { background: var(--yellow); color: var(--black); padding: 9px 18px; border-radius: 999px; font-weight: 800; transition: var(--transition); box-shadow: 0 4px 15px rgba(245, 196, 0, 0.4); }
     .nav-cta:hover { background: var(--yellow-hover); transform: translateY(-1px); }
     
     .menu-toggle { display: none; width: 40px; height: 40px; border: 0; background: transparent; cursor: pointer; position: relative; }
@@ -85,15 +85,26 @@
     .menu-toggle.active span:nth-child(1) { top: 19px; transform: rotate(45deg); }
     .menu-toggle.active span:nth-child(2) { top: 19px; transform: rotate(-45deg); }
 
+    /* ================= ANIMATION CLASSES ================= */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
     /* ================= BUTTONS ================= */
-    .btn { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 13px 25px; border: 0; border-radius: 999px; font-size: 14px; font-weight: 800; cursor: pointer; transition: var(--transition); }
-    .btn-black { background: var(--black); color: #fff; }
+    .btn { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 13px 25px; border: 0; border-radius: 29px; font-size: 14px; font-weight: 800; cursor: pointer; transition: var(--transition); }
+    .btn-black { background: var(--black); color: #fff; box-shadow: 0 10px 20px rgba(0,0,0,0.15); }
     .btn-black:hover { background: #333; transform: translateY(-2px); }
-    .btn-yellow { background: var(--yellow); color: var(--black); }
+    .btn-yellow { background: var(--yellow); color: var(--black); box-shadow: 0 10px 20px rgba(245,196,0,0.3); }
     .btn-yellow:hover { background: var(--yellow-hover); transform: translateY(-2px); }
 
     /* ================= HERO ================= */
-    .hero { padding: 105px 0 90px; text-align: center; }
+    .hero { padding: 125px 0 90px; text-align: center; }
     .eyebrow { display: inline-flex; align-items: center; gap: 8px; background: rgba(0,0,0,.04); border: 1px solid rgba(0,0,0,.07); padding: 7px 15px; border-radius: 999px; font-size: 12px; font-weight: 800; color: var(--gray); margin-bottom: 22px; }
     .dot { width: 7px; height: 7px; background: var(--yellow); border-radius: 50%; }
     h1 { font-size: clamp(45px, 7vw, 82px); line-height: 1.02; font-weight: 900; letter-spacing: -.055em; max-width: 850px; margin: auto; }
@@ -102,22 +113,57 @@
     .hero-buttons { display: flex; justify-content: center; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 65px; }
 
     .hero-visual { max-width: 960px; margin: auto; overflow: hidden; background: #fff; border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow-hover); }
-    .thumbnail-card { padding: 30px; background: #000; }
-    .thumb-placeholder { position: relative; overflow: hidden; aspect-ratio: 16/9; border-radius: var(--radius-sm); background: radial-gradient(circle at 50% 25%, rgba(245,196,0,.18), transparent 55%), linear-gradient(135deg, #202020, #050505); border: 1px solid rgba(255,255,255,.1); display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 30px; color: white; text-align: center; }
-    .thumb-placeholder small { color: var(--yellow); font-weight: 800; font-size: 11px; letter-spacing: 3px; margin-bottom: 15px; }
-    .thumb-placeholder strong { font-size: clamp(25px, 4vw, 52px); line-height: 1.05; letter-spacing: -.04em; max-width: 650px; }
-    .thumb-placeholder span { margin-top: 15px; color: #999; font-size: 13px; }
+    
+    .thumbnail-card { 
+      padding: 30px; 
+      background: linear-gradient(135deg, rgba(14, 165, 233, 0.25), rgba(56, 189, 248, 0.15)); 
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(14, 165, 233, 0.3);
+    }
+    
+    .thumb-placeholder { 
+      position: relative; 
+      overflow: hidden; 
+      aspect-ratio: 16/9; 
+      border-radius: var(--radius-sm); 
+      background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('thumb1.jpg') center/cover no-repeat;
+      border: 1px solid rgba(14, 165, 233, 0.4); 
+      display: flex; 
+      flex-direction: column; 
+      align-items: center; 
+      justify-content: center; 
+      padding: 30px; 
+      color: white; 
+      text-align: center; 
+    }
+    .thumb-placeholder small { color: var(--yellow); font-weight: 800; font-size: 11px; letter-spacing: 3px; margin-bottom: 15px; z-index: 2; text-shadow: 0 2px 4px rgba(0,0,0,0.8); }
+    .thumb-placeholder strong { font-size: clamp(25px, 4vw, 52px); line-height: 1.05; letter-spacing: -.04em; max-width: 650px; z-index: 2; text-shadow: 0 4px 15px rgba(0,0,0,0.8); }
+    .thumb-placeholder span { margin-top: 15px; color: #fff; font-size: 13px; z-index: 2; font-weight: 700; text-shadow: 0 2px 4px rgba(0,0,0,0.8); }
+    
     .hero-metrics { display: grid; grid-template-columns: repeat(3,1fr); background: #fff; border-top: 1px solid var(--border); }
     .metric-item { padding: 24px; text-align: center; border-right: 1px solid var(--border); }
     .metric-item:last-child { border-right: 0; }
-    .metric-item strong { display: block; font-size: 24px; font-weight: 800; }
+    .metric-item strong { display: block; font-size: 24px; font-weight: 800; color: var(--black); }
     .metric-item span { color: var(--gray); font-size: 12px; }
 
     section { padding: 70px 0; }
     .section-heading { max-width: 680px; margin: 0 auto 60px; text-align: center; }
-    .section-heading h2 { font-size: clamp(34px, 5vw, 50px); line-height: 1.05; letter-spacing: -.045em; font-weight: 900; }
+    .section-heading h2 { font-size: clamp(34px, 5vw, 50px); line-height: 1.25; letter-spacing: -.045em; font-weight: 900; }
     .section-heading p { margin-top: 15px; color: var(--gray); font-size: 17px; }
-    .highlight { background: var(--black); color: var(--yellow); padding: 0 10px; border-radius: 8px; display: inline-block; }
+    
+    .highlight { 
+      background: var(--yellow); 
+      color: var(--black); 
+      padding: 2px 10px; 
+      border-radius: 8px; 
+      display: inline-block; 
+      width: auto;
+      height: auto;
+      line-height: inherit;
+      vertical-align: baseline;
+      white-space: nowrap;
+    }
 
     /* ================= MARQUEE WORK STRIPS ================= */
     .marquee-wrapper { overflow: hidden; background: var(--light); padding: 60px 0; }
@@ -130,7 +176,6 @@
     .work-card { width: 300px; aspect-ratio: 16/9; flex-shrink: 0; border-radius: 16px; border: 1px solid var(--border); overflow: hidden; position: relative; background: #000; box-shadow: var(--shadow); }
     .work-card img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
-    /* Designer Badge over Thumbnails (Top-Right Corner) */
     .designer-badge {
       position: absolute;
       top: 10px;
@@ -142,7 +187,7 @@
       font-size: 10px;
       font-weight: 800;
       padding: 4px 10px;
-      border-radius: 999px;
+      border-radius: 19px;
       border: 1px solid rgba(255, 255, 255, 0.2);
       z-index: 5;
       text-transform: uppercase;
@@ -155,43 +200,84 @@
 
     /* ================= PROCESS ================= */
     .process-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 20px; }
-    .process-card { background: #fff; border: 1px solid var(--border); border-radius: var(--radius); padding: 32px; box-shadow: var(--shadow); transition: var(--transition); }
-    .process-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-hover); }
+    .process-card { background: #fff; border: 1px solid var(--border); border-radius: var(--radius); padding: 32px; box-shadow: var(--shadow); }
     .number { width: 34px; height: 34px; display: grid; place-items: center; border-radius: 9px; background: var(--black); color: var(--yellow); font-size: 11px; font-weight: 900; margin-bottom: 24px; }
     .process-card h3 { font-size: 19px; margin-bottom: 10px; }
     .process-card p { color: var(--gray); font-size: 14px; }
 
-    /* ================= DESIGNER SECTION ================= */
-    .designer-section { background: var(--light); overflow: hidden; }
-    .designer-track { display: flex; width: max-content; gap: 20px; animation: designerMove 34s linear infinite; }
+    /* ================= MEET OUR DESIGNERS ================= */
+    .designer-section { background: var(--light); overflow: hidden; padding: 70px 0 90px; }
+    .designer-track { display: flex; width: max-content; gap: 24px; animation: designerMove 50s linear infinite; }
     .designer-section:hover .designer-track { animation-play-state: running; }
-    .designer-card { width: 265px; min-height: 290px; flex-shrink: 0; background: var(--black-2); color: white; border: 1px solid #292929; border-radius: var(--radius); padding: 34px 28px; text-align: center; transition: var(--transition); }
-    .designer-card:hover { transform: translateY(0px); border-color: #444; }
-    .designer-avatar { width: 80px; height: 80px; margin: 0 auto 20px; display: grid; place-items: center; border-radius: 50%; border: 3px solid var(--yellow); background: #0c0c0c; overflow: hidden; }
+    
+    .designer-card { 
+      width: 275px; 
+      min-height: 330px; 
+      flex-shrink: 0; 
+      background: rgba(255, 255, 255, 0.75); 
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      color: var(--black); 
+      border: 1px solid rgba(255, 255, 255, 0.9); 
+      border-radius: var(--radius); 
+      padding: 30px 22px; 
+      text-align: center; 
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05), inset 0 1px 0 rgba(255, 255, 255, 1);
+      transition: none !important;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+    }
+    .designer-avatar { width: 80px; height: 80px; margin: 0 auto 15px; display: grid; place-items: center; border-radius: 50%; border: 3px solid var(--yellow); background: #f0f0f0; overflow: hidden; }
     .designer-avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
-    .designer-card h3 { font-size: 20px; margin-bottom: 8px; }
-    .designer-role { display: inline-block; background: var(--yellow); color: var(--black); padding: 5px 12px; border-radius: 999px; font-size: 10px; font-weight: 900; margin-bottom: 16px; }
-    .designer-card p { color: #999; font-size: 13px; line-height: 1.6; }
+    .designer-card h3 { font-size: 20px; margin-bottom: 6px; color: var(--black); }
+    .designer-role { display: inline-block; background: var(--black); color: var(--yellow); padding: 4px 12px; border-radius: 999px; font-size: 10px; font-weight: 900; margin-bottom: 14px; }
+    .designer-card p { color: #555; font-size: 13px; line-height: 1.5; }
     @keyframes designerMove { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 
     /* ================= SERVICES ================= */
     .service-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; }
-    .service-card { position: relative; background: #fff; border: 1px solid var(--border); border-radius: var(--radius); padding: 36px; box-shadow: var(--shadow); display: flex; flex-direction: column; transition: var(--transition); }
-    .service-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-hover); }
-    .service-card.featured { background: var(--black); color: white; border-color: var(--black); transform: translateY(-8px); }
-    .service-card.featured:hover { transform: translateY(-13px); }
+    .service-card { position: relative; background: #fff; border: 1px solid var(--border); border-radius: var(--radius); padding: 36px; box-shadow: var(--shadow); display: flex; flex-direction: column; }
+    .service-card.featured { background: var(--black); color: white; border-color: var(--yellow); }
     .service-card h3 { font-size: 22px; margin-bottom: 8px; }
     .service-card > p { color: var(--gray); font-size: 14px; min-height: 42px; }
     .featured > p { color: #999; }
-    .price { font-size: 40px; font-weight: 900; letter-spacing: -.05em; margin: 22px 0 18px; }
+    
+    .starting-tag {
+      display: inline-block;
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 4px;
+    }
+    .featured .starting-tag { color: #aaa; }
+
+    .price { font-size: 40px; font-weight: 900; letter-spacing: -.05em; margin: 12px 0 18px; }
+    
+    .discount-badge {
+      display: inline-block;
+      width: fit-content;
+      width: -moz-fit-content;
+      background: rgba(245, 196, 0, 0.15);
+      color: #b38f00;
+      font-size: 11px;
+      font-weight: 800;
+      padding: 3px 10px;
+      border-radius: 999px;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+    .featured .discount-badge { background: var(--yellow); color: var(--black); }
+
     .service-card ul { list-style: none; border-top: 1px solid var(--border); padding-top: 22px; margin-top: auto; }
     .featured ul { border-color: rgba(255,255,255,.14); }
     .service-card li { display: flex; gap: 9px; align-items: flex-start; font-size: 14px; margin: 12px 0; }
     .service-card li::before { content: "✓"; color: var(--yellow); font-weight: 900; }
-    .service-btn { width: 100%; min-height: 46px; margin-top: 26px; border: 0; border-radius: 999px; background: var(--light); color: var(--black); font-weight: 800; cursor: pointer; transition: var(--transition); }
-    .service-btn:hover { transform: translateY(-2px); background: var(--border); }
+    .service-btn { width: 100%; min-height: 46px; margin-top: 26px; border: 0; border-radius: 999px; background: var(--light); color: var(--black); font-weight: 800; cursor: pointer; }
     .featured .service-btn { background: var(--yellow); }
-    .featured .service-btn:hover { background: var(--yellow-hover); }
 
     /* ================= FAQ SECTION ================= */
     .faq-section { background: #fff; padding: 70px 0; }
@@ -218,44 +304,63 @@
     .email-line { margin-top: 22px; font-size: 14px; color: #333; }
     .email-line a { font-weight: 900; text-decoration: underline; }
 
-    /* ================= FLOATING ROUNDED FOOTER ================= */
+    /* ================= FLOATING ROUNDED FOOTER WITH INSTAGRAM ================= */
     footer { padding: 10px 0; }
-    .footer-container { width: min(92%, var(--max)); margin: 0 auto; background: var(--black); color: white; padding: 10px; border-radius: var(--radius); display: flex; justify-content: space-between; align-items: center; text-align: center; box-shadow: var(--shadow-hover); }
-    .footer-text { font-size: 14px; color: #999; margin-top: 6px; }
+    .footer-container { 
+      width: min(92%, var(--max)); 
+      margin: 0 auto; 
+      background: var(--black); 
+      color: white; 
+      padding: 15px 25px; 
+      border-radius: var(--radius); 
+      display: flex; 
+      justify-content: space-between; 
+      align-items: center; 
+      text-align: center; 
+      box-shadow: var(--shadow-hover); 
+    }
+    .footer-text { font-size: 14px; color: #999; }
+    .footer-socials a { 
+      color: var(--yellow); 
+      font-weight: 700; 
+      font-size: 14px; 
+      text-decoration: none; 
+      display: inline-flex; 
+      align-items: center; 
+      gap: 6px; 
+      transition: var(--transition); 
+    }
+    .footer-socials a:hover { color: #fff; text-decoration: underline; }
 
     /* ================= MODALS ================= */
-    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.5); backdrop-filter: blur(10px); z-index: 2000; display: grid; place-items: center; opacity: 0; pointer-events: none; transition: var(--transition); padding: 20px; }
+    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.5); backdrop-filter: blur(10px); z-index: 20000; display: grid; place-items: center; opacity: 0; pointer-events: none; padding: 20px; }
     .modal-overlay.active { opacity: 1; pointer-events: auto; }
-    .modal-card { background: #fff; border-radius: var(--radius); width: 100%; max-width: 500px; padding: 40px; box-shadow: 0 30px 60px rgba(0,0,0,.2); position: relative; max-height: 90vh; overflow-y: auto; transform: scale(.95); transition: var(--transition); }
-    .modal-overlay.active .modal-card { transform: scale(1); }
-    .modal-close { position: absolute; top: 20px; right: 20px; background: var(--light); border: 0; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; font-weight: 800; transition: var(--transition); }
-    .modal-close:hover { background: var(--border); }
+    .modal-card { background: #fff; border-radius: var(--radius); width: 100%; max-width: 500px; padding: 40px; box-shadow: 0 30px 60px rgba(0,0,0,.2); position: relative; max-height: 90vh; overflow-y: auto; }
+    .modal-close { position: absolute; top: 20px; right: 20px; background: var(--light); border: 0; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; font-weight: 800; }
     .form-group { margin-bottom: 14px; text-align: left; }
     .form-group label { display: block; font-size: 12px; font-weight: 700; margin-bottom: 6px; }
     .form-group input, .form-group select { width: 100%; padding: 12px 16px; border-radius: var(--radius-sm); border: 1px solid var(--border); background: var(--bg); font-size: 14px; outline: 0; color: var(--black); }
-    .form-group input:focus, .form-group select:focus { border-color: var(--black); }
-    .modal-submit { width: 100%; margin-top: 10px; min-height: 48px; background: var(--black); color: #fff; border: 0; border-radius: 999px; font-weight: 800; cursor: pointer; transition: var(--transition); }
-    .modal-submit:hover { background: #333; }
+    .modal-submit { width: 100%; margin-top: 10px; min-height: 48px; background: var(--black); color: #fff; border: 0; border-radius: 999px; font-weight: 800; cursor: pointer; }
 
     .thank-you-card { text-align: center; padding: 30px 10px; }
     .success-icon { width: 64px; height: 64px; background: #e6f4ea; color: #16803c; border-radius: 50%; display: grid; place-items: center; font-size: 28px; margin: 0 auto 20px; font-weight: 900; }
 
     @media(max-width: 850px) {
-      nav { top: 12px; width: 94%; border-radius: 18px; }
+      nav { top: 10px; width: 94%; border-radius: 18px; }
       .menu-toggle { display: block; }
-      .nav-links { position: fixed; top: 75px; left: 50%; transform: translateX(-50%); width: 94%; background: rgba(255,255,255,.97); backdrop-filter: blur(20px); border: 1px solid var(--border); flex-direction: column; padding: 25px; gap: 16px; border-radius: var(--radius); box-shadow: 0 20px 40px rgba(0,0,0,.1); opacity: 0; pointer-events: none; transition: var(--transition); }
+      .nav-links { position: fixed; top: 75px; left: 50%; transform: translateX(-50%); width: 94%; background: rgba(255,255,255,.97); backdrop-filter: blur(20px); border: 1px solid var(--border); flex-direction: column; padding: 25px; gap: 16px; border-radius: var(--radius); box-shadow: 0 20px 40px rgba(0,0,0,.1); opacity: 0; pointer-events: none; }
       .nav-links.active { opacity: 1; pointer-events: auto; }
       .process-grid, .designer-track, .service-grid, .why-grid, .faq-grid { grid-template-columns: 1fr; }
       .hero-metrics { grid-template-columns: 1fr; }
       .metric-item { border-right: 0; border-bottom: 1px solid var(--border); }
       .metric-item:last-child { border-bottom: 0; }
-      .footer-container { flex-direction: column; gap: 16px; padding: 30px 20px; }
+      .footer-container { flex-direction: column; gap: 12px; padding: 25px 20px; }
     }
   </style>
 </head>
 <body>
 
-  <!-- ================= NAVBAR ================= -->
+  <!-- ================= 3D GLOSSY GLASS NAVBAR ================= -->
   <nav>
     <div class="container nav-inner">
       <a href="#" class="logo-wrap">
@@ -278,15 +383,15 @@
     <!-- HERO SECTION -->
     <section class="hero">
       <div class="container">
-        <div class="eyebrow"><span class="dot"></span> YouTube Thumbnail Studio</div>
-        <h1>MAKE THEM <span class="yellow-text">CLICK.</span></h1>
-        <p class="hero-text">Strategy-led YouTube thumbnails designed around your video, audience, and hook.</p>
-        <div class="hero-buttons">
+        <div class="eyebrow fade-up"><span class="dot"></span> YouTube Thumbnail Studio</div>
+        <h1 class="fade-up">MAKE THEM <span class="yellow-text">CLICK.</span></h1>
+        <p class="hero-text fade-up">Strategy-led YouTube thumbnails designed around your video, audience, and hook.</p>
+        <div class="hero-buttons fade-up">
           <button class="btn btn-black trigger-modal" data-plan="">Start a Project &rarr;</button>
           <a href="#work" class="btn btn-yellow">View Our Work</a>
         </div>
 
-        <div class="hero-visual">
+        <div class="hero-visual fade-up">
           <div class="thumbnail-card">
             <div class="thumb-placeholder">
               <small>THUMBNAIL CONCEPT</small>
@@ -304,7 +409,7 @@
     </section>
 
     <!-- ================= OPPOSITE MOVING WORK STRIPS ================= -->
-    <section class="marquee-wrapper" id="work">
+    <section class="marquee-wrapper fade-up" id="work">
       <div class="container" style="margin-bottom: 35px;">
         <div class="section-heading" style="margin-bottom: 0;">
           <h2>Work that makes <span class="highlight">people stop.</span></h2>
@@ -342,19 +447,19 @@
           <div class="work-card"><img src="thumb11.jpg" alt="Thumb 11"><span class="designer-badge">By Shivam</span></div>
           <div class="work-card"><img src="thumb12.jpg" alt="Thumb 12"><span class="designer-badge">By Shivam</span></div>
           <div class="work-card"><img src="Thumb13.jpg" alt="Thumb 13"><span class="designer-badge">By Shivam</span></div>
-          <div class="work-card"><img src="thumb14.jpg" alt="Thumb 14"><span class="designer-badge">By Shivam</span></div>
+          <div class="work-card"><img src="Thumb14.jpg" alt="Thumb 14"><span class="designer-badge">By Shivam</span></div>
           <div class="work-card"><img src="thumb15.jpg" alt="Thumb 15"><span class="designer-badge">By Nikhil</span></div>
           <!-- Loop repeat -->
           <div class="work-card"><img src="thumb12.jpg" alt="Thumb 12"><span class="designer-badge">By Shivam</span></div>
           <div class="work-card"><img src="Thumb13.jpg" alt="Thumb 13"><span class="designer-badge">By Shivam</span></div>
-          <div class="work-card"><img src="thumb14.jpg" alt="Thumb 14"><span class="designer-badge">By Shivam</span></div>
+          <div class="work-card"><img src="Thumb14.jpg" alt="Thumb 14"><span class="designer-badge">By Shivam</span></div>
           <div class="work-card"><img src="thumb15.jpg" alt="Thumb 15"><span class="designer-badge">By Nikhil</span></div>
         </div>
       </div>
     </section>
 
     <!-- ================= PROCESS ================= -->
-    <section id="process">
+    <section id="process" class="fade-up">
       <div class="container">
         <div class="section-heading">
           <h2>Not just a design. <span class="highlight">A process.</span></h2>
@@ -370,7 +475,7 @@
     </section>
 
     <!-- ================= MEET OUR DESIGNERS ================= -->
-    <section class="designer-section" id="designers">
+    <section class="designer-section fade-up" id="designers">
       <div class="container" style="margin-bottom: 40px;">
         <div class="section-heading" style="margin-bottom: 0;">
           <h2>The minds behind <span class="highlight">the clicks.</span></h2>
@@ -389,15 +494,29 @@
           </div>
           <!-- Designer 2 -->
           <div class="designer-card">
-            <div class="designer-avatar"><img src="aman.jpg" alt="Nikhil"></div>
+            <div class="designer-avatar"><img src="Nikhil.jpg" alt="Nikhil"></div>
             <h3>Nikhil</h3>
             <span class="designer-role">Senior Visual Designer</span>
             <p>Master of 3D lighting, depth, high-contrast color grading, and clean typography layouts.</p>
           </div>
           <!-- Designer 3 -->
           <div class="designer-card">
-            <div class="designer-avatar"><img src="rohan.jpg" alt="Rohan Das"></div>
-            <h3>Rohan Das</h3>
+            <div class="designer-avatar"><img src="Shivam.jpg" alt="Shivam"></div>
+            <h3>Shivam</h3>
+            <span class="designer-role">Thumbnail Specialist</span>
+            <p>Focuses on gaming, tech, and commentary niches with dynamic, narrative-driven thumbnail concepts.</p>
+          </div>
+         <!-- Designer 4 -->
+          <div class="designer-card">
+            <div class="designer-avatar"><img src="Saksham.jpg" alt="Saksham"></div>
+            <h3>Saksham</h3>
+            <span class="designer-role">Thumbnail Specialist</span>
+            <p>Focuses on gaming, tech, and commentary niches with dynamic, narrative-driven thumbnail concepts.</p>
+          </div>
+                   <!-- Designer 5 -->
+          <div class="designer-card">
+            <div class="designer-avatar"><img src="Vatsal.jpg" alt="Vatsal"></div>
+            <h3>Vatsal</h3>
             <span class="designer-role">Thumbnail Specialist</span>
             <p>Focuses on gaming, tech, and commentary niches with dynamic, narrative-driven thumbnail concepts.</p>
           </div>
@@ -409,13 +528,13 @@
             <p>Focused on thumbnail strategy, creator growth, and building a streamlined creative system that turns ideas into click-worthy visuals.</p>
           </div>
           <div class="designer-card">
-            <div class="designer-avatar"><img src="aman.jpg" alt="Aman Verma"></div>
-            <h3>Aman Verma</h3>
+            <div class="designer-avatar"><img src="Nikhil.jpg" alt="Nikhil"></div>
+            <h3>Nikhil</h3>
             <span class="designer-role">Senior Visual Designer</span>
             <p>Master of 3D lighting, depth, high-contrast color grading, and clean typography layouts.</p>
           </div>
           <div class="designer-card">
-            <div class="designer-avatar"><img src="rohan.jpg" alt="Rohan Das"></div>
+            <div class="designer-avatar"><img src="Shivam.jpg" alt="Shivam"></div>
             <h3>Rohan Das</h3>
             <span class="designer-role">Thumbnail Specialist</span>
             <p>Focuses on gaming, tech, and commentary niches with dynamic, narrative-driven thumbnail concepts.</p>
@@ -424,47 +543,24 @@
       </div>
     </section>
     
-        <!-- CSS for Marquee & Images -->
-    <style>
-      .designer-marquee {
-        overflow: hidden;
-        width: 100%;
-      }
-      .designer-track {
-        display: flex;
-        gap: 20px;
-        width: max-content;
-        animation: scrollDesigners 30s linear infinite;
-      }
-      .designer-section:hover .designer-track {
-        animation-play-state: running;
-      }
-      .designer-avatar img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        border-radius: 50%;
-        display: block;
-      }
-      @keyframes scrollDesigners {
-        from { transform: translateX(0); }
-        to { transform: translateX(-50%); }
-      }
-    </style>
-
     <!-- ================= SERVICES ================= -->
-    <section id="services">
+    <section id="services" class="fade-up">
       <div class="container">
         <div class="section-heading">
           <h2>Simple plans. <span class="highlight">Serious thumbnails.</span></h2>
           <p>Flexible tiers for occasional publishers and active channels.</p>
         </div>
         <div class="service-grid">
+          <!-- One-Off Plan -->
           <div class="service-card">
             <h3>One-Off</h3>
             <p>Perfect when you need a single high-impact thumbnail.</p>
-            <span class="price-label">Starting at</span>
-             <div class="price">₹1,499</div>
+            <span class="discount-badge" data-original="2499" data-current="1499">...</span>
+            <span class="starting-tag">Starting at</span>
+            <div class="price" style="display: flex; align-items: baseline; gap: 12px;">
+              <span style="color: var(--yellow);">₹1,499</span>
+              <span style="font-size: 22px; color: var(--gray); font-weight: 600; text-decoration: line-through;">₹2,499</span>
+            </div>
             <span class="price-note">Per single thumbnail</span>
             <ul>
               <li>1 high-CTR thumbnail</li>
@@ -475,12 +571,17 @@
             <button class="service-btn trigger-modal" data-plan="One-Off - ₹1,499">Select One-Off</button>
           </div>
 
+          <!-- Creator Pack (Most Popular) -->
           <div class="service-card featured">
             <span class="popular-badge">MOST POPULAR</span>
             <h3>Creator Pack</h3>
             <p>For creators publishing regularly wanting consistent visuals.</p>
-            <span class="price-label">Starting at</span>
-<div class="price">₹5,499</div>
+            <span class="discount-badge" data-original="7999" data-current="5499">...</span>
+            <span class="starting-tag">Starting at</span>
+            <div class="price" style="display: flex; align-items: baseline; gap: 12px;">
+              <span style="color: var(--yellow);">₹5,499</span>
+              <span style="font-size: 22px; color: #aaa; font-weight: 600; text-decoration: line-through;">₹7,999</span>
+            </div>
             <span class="price-note">Pack of 4 thumbnails</span>
             <ul>
               <li>4 thumbnails total</li>
@@ -491,11 +592,16 @@
             <button class="service-btn trigger-modal" data-plan="Creator Pack - ₹5,499">Select Creator Pack</button>
           </div>
 
+          <!-- Growth Pack -->
           <div class="service-card">
             <h3>Growth</h3>
             <p>Built for active channels publishing multiple times a month.</p>
-           <span class="price-label">Starting at</span>
- <div class="price">₹9,999</div>
+            <span class="discount-badge" data-original="13999" data-current="9999">...</span>
+            <span class="starting-tag">Starting at</span>
+            <div class="price" style="display: flex; align-items: baseline; gap: 12px;">
+              <span style="color: var(--yellow);">₹9,999</span>
+              <span style="font-size: 22px; color: var(--gray); font-weight: 600; text-decoration: line-through;">₹13,999</span>
+            </div>
             <span class="price-note">Pack of 8 thumbnails</span>
             <ul>
               <li>8 thumbnails total</li>
@@ -510,7 +616,7 @@
     </section>
 
     <!-- ================= FAQ SECTION ================= -->
-    <section class="faq-section" id="faq">
+    <section class="faq-section fade-up" id="faq">
       <div class="container">
         <div class="section-heading">
           <h2>Frequently Asked <span class="highlight">Questions.</span></h2>
@@ -643,7 +749,7 @@
     </style>
 
     <!-- ================= WHY US ================= -->
-    <section class="why-section" id="why">
+    <section class="why-section fade-up" id="why">
       <div class="container">
         <div class="section-heading">
           <h2>Engineered for CTR.</h2>
@@ -657,7 +763,7 @@
     </section>
 
     <!-- ================= CTA ================= -->
-    <section class="cta">
+    <section class="cta fade-up">
       <div class="container">
         <div class="cta-box">
           <h2>Ready to boost your CTR?</h2>
@@ -669,14 +775,16 @@
     </section>
   </main>
 
-  <!-- ================= FLOATING ROUNDED FOOTER ================= -->
+  <!-- ================= FLOATING ROUNDED FOOTER WITH INSTAGRAM ================= -->
   <footer>
     <div class="footer-container">
       <div style="text-align: left;">
         <p class="footer-text">© 2026 ByYash.in Studio. All rights reserved.</p>
       </div>
-      <div style="font-size: 13px; color: var(--yellow); font-weight: 700;">
-        Crafting clicks that convert.
+      <div class="footer-socials">
+        <a href="https://www.instagram.com/byyash.in?igsi=Nmx1Y2h2bDFicmV2" target="_blank">
+          <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+        </a>
       </div>
     </div>
   </footer>
@@ -732,7 +840,34 @@
 
   <!-- ================= JAVASCRIPT LOGIC ================= -->
   <script>
-    // Mobile Nav Toggle
+    // Scroll Intersection Observer for Fade-Up Animations
+    document.addEventListener("DOMContentLoaded", () => {
+      const observerOptions = { threshold: 0.1 };
+      const observer = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, observerOptions);
+
+      document.querySelectorAll('.fade-up').forEach(el => {
+        observer.observe(el);
+      });
+
+      // Auto Calculate Discount Percentage
+      document.querySelectorAll('.discount-badge').forEach(badge => {
+        const original = parseFloat(badge.getAttribute('data-original'));
+        const current = parseFloat(badge.getAttribute('data-current'));
+        if (original && current && original > current) {
+          const discount = Math.round(((original - current) / original) * 100);
+          badge.textContent = `${discount}% OFF`;
+        }
+      });
+    });
+
+    // Mobile Nav Toggle (Hamburger Menu Working Fix)
     const menuToggle = document.getElementById('menuToggle');
     const navLinks = document.getElementById('navLinks');
     
